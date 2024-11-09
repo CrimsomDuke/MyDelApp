@@ -1,5 +1,7 @@
 package com.crimsom.mydelapp.models
 
+import java.util.Date
+
 data class Order(
     var id : Int,
     var userId : Int,
@@ -10,4 +12,6 @@ data class Order(
     var longitud : Double,
     var estado : Int
 ) {
+    public var fechaHora : Date = Date()
+    public var direccion : String = "Test temporal"
 }

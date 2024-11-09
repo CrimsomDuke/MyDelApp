@@ -15,6 +15,10 @@
             app:destination="@id/registerFragment"
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
+        <action
+            android:id="@+id/action_loginFragment_to_customerTabFragment"
+            app:destination="@id/customerTabFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
@@ -27,4 +31,9 @@
             app:enterAnim="@android:anim/slide_in_left"
             app:exitAnim="@android:anim/slide_out_right" />
     </fragment>
+    <fragment
+        android:id="@+id/customerTabFragment"
+        android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerTabFragment"
+        android:label="fragment_customer_tab"
+        tools:layout="@layout/fragment_customer_tab" />
 </navigation>

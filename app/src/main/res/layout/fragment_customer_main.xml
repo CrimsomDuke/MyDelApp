@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.customer_mode.fragments.CustomerMainFragment" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/cust_welcomeLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#673AB7"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:padding="15dp"
+                android:text="Bienvenido user ¿Que pedirás hoy?"
+                android:textColor="#F2F1F1"
+                android:textFontWeight="1000"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/restaurants_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Restaurantes Disponibles"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRestaurants"
+                android:layout_width="match_parent"
+                android:layout_height="373dp" />
+
+            <TextView
+                android:id="@+id/orders_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:text="Mis pedidos"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPedidos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
