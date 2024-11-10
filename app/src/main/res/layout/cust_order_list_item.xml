@@ -39,4 +39,12 @@
         android:textColor="#B4B1B1"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/cust_ord_dateLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fecha"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
 </LinearLayout>

@@ -41,4 +41,8 @@ object FakeDB {
         return user.tipoUsuario == 2
     }
 
+    fun getUserById(userId: Int): User? {
+        return users.find { it.id == userId }
+    }
+
 }
