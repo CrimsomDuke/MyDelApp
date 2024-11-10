@@ -35,5 +35,14 @@
         android:id="@+id/customerTabFragment"
         android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerTabFragment"
         android:label="fragment_customer_tab"
-        tools:layout="@layout/fragment_customer_tab" />
+        tools:layout="@layout/fragment_customer_tab" >
+        <action
+            android:id="@+id/action_customerTabFragment_to_customerRestaurantFragment"
+            app:destination="@id/customerRestaurantFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerRestaurantFragment"
+        android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerRestaurantFragment"
+        android:label="fragment_customer_restaurant"
+        tools:layout="@layout/fragment_customer_restaurant" />
 </navigation>

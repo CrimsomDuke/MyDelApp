@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/cust_rest_productPic"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+
+    <TextView
+        android:id="@+id/cust_rest_productNameLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="NombreProducto"
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:id="@+id/buttonsGroup"
+        android:layout_width="162dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="0"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cust_rest_removeProductButton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="-"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/cust_rest_productCounterLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="0"
+            android:text="0"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/cust_rest_addProductButton"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="+"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+</LinearLayout>

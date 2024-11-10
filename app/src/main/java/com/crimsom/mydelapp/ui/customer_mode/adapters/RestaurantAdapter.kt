@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.OnRestaurantClickListener
 import com.crimsom.mydelapp.databinding.RestaurantListItemBinding
 import com.crimsom.mydelapp.models.Restaurant
 
-class RestaurantAdapter(var restaurantsList : List<Restaurant>) : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
+class RestaurantAdapter(var restaurantsList : List<Restaurant>, var onRestaurantClickListener: OnRestaurantClickListener) : RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder {
         return RestaurantViewHolder(RestaurantListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).root)
@@ -19,7 +20,7 @@ class RestaurantAdapter(var restaurantsList : List<Restaurant>) : RecyclerView.A
     }
 
     override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        holder.bind(restaurantsList[position])
+        holder.bind(restaurantsList[position], onRestaurantClickListener)
     }
 
     public fun updateData(newData : List<Restaurant>){
@@ -35,9 +36,14 @@ class RestaurantAdapter(var restaurantsList : List<Restaurant>) : RecyclerView.A
             binding = RestaurantListItemBinding.bind(itemView)
         }
 
-        public fun bind(restaurant: Restaurant){
+        public fun bind(restaurant: Restaurant, onRestaurantClickListener: OnRestaurantClickListener){
             binding.restaurantNameLabel.text = restaurant.nombre
             binding.restaurantImage.setImageResource(R.drawable.ic_launcher_foreground)
+
+            binding.restaurantLayout.setOnClickListener{
+                onRestaurantClickListener.onRestaurantClick(restaurant.id);
+            }
+
         }
     }
 }

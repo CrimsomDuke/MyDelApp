@@ -5,15 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.OnRestaurantClickListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerMainBinding
+import com.crimsom.mydelapp.models.Restaurant
 import com.crimsom.mydelapp.ui.customer_mode.adapters.OrderAdapter
 import com.crimsom.mydelapp.ui.customer_mode.adapters.RestaurantAdapter
 
-class CustomerMainFragment : Fragment() {
+class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
 
     private lateinit var binding : FragmentCustomerMainBinding;
 
@@ -35,7 +38,7 @@ class CustomerMainFragment : Fragment() {
     private fun setupRecyclerViews(){
 
         binding.rvRestaurants.apply {
-            adapter = RestaurantAdapter(FakeDB.restaurants)
+            adapter = RestaurantAdapter(FakeDB.restaurants, this@CustomerMainFragment)
             layoutManager = LinearLayoutManager(context)
         }
 
@@ -46,4 +49,15 @@ class CustomerMainFragment : Fragment() {
             }
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        MainActivity.selectedRestaurantId = 0;
+    }
+
+    override fun onRestaurantClick(restaurantId: Int) {
+        MainActivity.selectedRestaurantId = restaurantId
+        findNavController().navigate(R.id.action_customerTabFragment_to_customerRestaurantFragment)
+    }
+
 }

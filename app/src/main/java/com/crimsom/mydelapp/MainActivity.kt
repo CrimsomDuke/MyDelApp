@@ -10,6 +10,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object{
         var currentUserId : Int = 0
+        var selectedRestaurantId : Int = 0;
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

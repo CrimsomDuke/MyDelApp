@@ -1,13 +1,13 @@
 package com.crimsom.mydelapp.ui.customer_mode.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.CustOrderListItemBinding
-import com.crimsom.mydelapp.databinding.RestaurantListItemBinding
 import com.crimsom.mydelapp.models.Order
-import com.crimsom.mydelapp.ui.customer_mode.adapters.RestaurantAdapter.RestaurantViewHolder
 
 class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -33,6 +33,15 @@ class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAda
             binding.custOrdRestaurantLabel.text = order.restauranteId.toString()
             binding.custOrdAddressLabel.text = order.direccion;
             binding.custOrdDriverLabel.text = order.choferId.toString();
+
+            if(order.estado == 3){
+                binding.apply {
+                    custOrdRestaurantLabel.setTextColor(Color.BLACK)
+                    custOrdAddressLabel.setTextColor(Color.BLACK)
+                    custOrdDriverLabel.setTextColor(Color.BLACK)
+                }
+                binding.orderLayout.setBackgroundResource(R.drawable.round_shape_white)
+            }
         }
     }
 }
