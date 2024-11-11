@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.driver_mode.fragments.DriverMainFragment">
+
+    <TextView
+        android:id="@+id/driver_welcomeLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#673AB7"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="Bienvenido user. Esta son los pedidos disponibles:"
+        android:textColor="#F2F1F1"
+        android:textFontWeight="1000"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvUntakenOrders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

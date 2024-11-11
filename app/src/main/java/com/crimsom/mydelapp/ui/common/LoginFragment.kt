@@ -67,7 +67,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun goToDriverMode(){
-        //var navController = findNavController()
-        //navController.navigate(R.id.action_loginFragment_to_driverMainFragment)
+        var navController = findNavController()
+        navController.navigate(R.id.action_loginFragment_to_driverMainFragment)
     }
 }

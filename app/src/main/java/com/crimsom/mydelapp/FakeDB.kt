@@ -22,7 +22,10 @@ object FakeDB {
     var orders = mutableListOf<Order>(
         Order(1, 1, 1, 40.0, 2, 100.0, 100.0, 1),
         Order(2, 1, 2, 50.0, 2, 100.0, 100.0, 1),
-        Order(3, 1, 3, 60.0, 2, 100.0, 100.0, 3),
+        Order(3, 1, 3, 60.0, 2, 100.0, 100.0, 0),
+        Order(4, 1, 1, 40.0, 2, 100.0, 100.0, 0),
+        Order(5, 1, 2, 50.0, 2, 100.0, 100.0, 0),
+        Order(1, 1, 1, 40.0, 2, 100.0, 100.0, 0),
         Order(4, 1, 1, 40.0, 2, 100.0, 100.0, 3),
         Order(5, 1, 2, 50.0, 2, 100.0, 100.0, 3),
     )
@@ -52,6 +55,10 @@ object FakeDB {
 
     fun getOrdersByUserId(userId: Int): List<Order> {
         return orders.filter { it.userId == userId }
+    }
+
+    fun getUntakenOrders(): List<Order> {
+        return orders.filter { it.estado == 0 }
     }
 
     fun isDriver(user : User) : Boolean{
