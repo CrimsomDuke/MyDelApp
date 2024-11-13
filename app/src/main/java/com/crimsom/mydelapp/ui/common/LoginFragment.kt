@@ -52,8 +52,10 @@ class LoginFragment : Fragment() {
                 MainActivity.currentUserId = currentUser.id;
 
                 if(!FakeDB.isDriver(currentUser)){
+                    MainActivity.IS_CURRENT_USER_DRIVER = false;
                     this.goToCustomerMode();
                 }else{
+                    MainActivity.IS_CURRENT_USER_DRIVER = true;
                     this.goToDriverMode()
                 }
             }
@@ -68,6 +70,6 @@ class LoginFragment : Fragment() {
 
     private fun goToDriverMode(){
         var navController = findNavController()
-        navController.navigate(R.id.action_loginFragment_to_driverMainFragment)
+        navController.navigate(R.id.action_loginFragment_to_driverTabFragment);
     }
 }

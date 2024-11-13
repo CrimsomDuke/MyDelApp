@@ -1,4 +1,4 @@
-package com.crimsom.mydelapp.ui.customer_mode.fragments
+package com.crimsom.mydelapp.ui.common
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,13 +9,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
-import com.crimsom.mydelapp.databinding.FragmentCustomerProfileBinding
+import com.crimsom.mydelapp.databinding.FragmentProfileBinding
+import com.crimsom.mydelapp.ui.customer_mode.adapters.HistoryOrderAdapter
 import com.crimsom.mydelapp.ui.customer_mode.adapters.OrderAdapter
 
 
-class CustomerProfileFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
-    private lateinit var binding : FragmentCustomerProfileBinding;
+    private lateinit var binding : FragmentProfileBinding;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +26,7 @@ class CustomerProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCustomerProfileBinding.inflate(inflater, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         this.setupUserDetails();
         this.setupRecyclerView();
@@ -44,7 +45,7 @@ class CustomerProfileFragment : Fragment() {
 
     private fun setupRecyclerView(){
         binding.rvOrderHistory.apply {
-            adapter = OrderAdapter(FakeDB.getOrdersByUserId(MainActivity.currentUserId))
+            adapter = HistoryOrderAdapter(FakeDB.getOrdersByUserId(MainActivity.currentUserId))
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
         }
     }

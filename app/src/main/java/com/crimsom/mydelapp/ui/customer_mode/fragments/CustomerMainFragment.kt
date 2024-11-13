@@ -15,6 +15,7 @@ import com.crimsom.mydelapp.databinding.FragmentCustomerMainBinding
 import com.crimsom.mydelapp.models.Restaurant
 import com.crimsom.mydelapp.ui.customer_mode.adapters.OrderAdapter
 import com.crimsom.mydelapp.ui.customer_mode.adapters.RestaurantAdapter
+import com.crimsom.mydelapp.utilities.ShoppingCart
 
 class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
 
@@ -52,7 +53,9 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
 
     override fun onResume() {
         super.onResume()
+        //reset all values
         MainActivity.selectedRestaurantId = 0;
+        ShoppingCart.reset();
     }
 
     override fun onRestaurantClick(restaurantId: Int) {

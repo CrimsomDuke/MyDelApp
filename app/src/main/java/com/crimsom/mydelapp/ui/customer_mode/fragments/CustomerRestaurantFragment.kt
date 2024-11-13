@@ -10,6 +10,7 @@ import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.databinding.FragmentCustomerRestaurantBinding
 import com.crimsom.mydelapp.ui.customer_mode.adapters.ProductAdapter
+import com.crimsom.mydelapp.utilities.ShoppingCart
 
 
 class CustomerRestaurantFragment : Fragment() {

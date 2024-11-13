@@ -20,8 +20,8 @@
             app:destination="@id/customerTabFragment"
             app:enterAnim="@android:anim/slide_in_left" />
         <action
-            android:id="@+id/action_loginFragment_to_driverMainFragment"
-            app:destination="@id/driverMainFragment"
+            android:id="@+id/action_loginFragment_to_driverTabFragment"
+            app:destination="@id/driverTabFragment"
             app:enterAnim="@android:anim/slide_in_left" />
     </fragment>
     <fragment
@@ -37,9 +37,9 @@
     </fragment>
     <fragment
         android:id="@+id/customerTabFragment"
-        android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerTabFragment"
+        android:name="com.crimsom.mydelapp.ui.common.TabFragment"
         android:label="fragment_customer_tab"
-        tools:layout="@layout/fragment_customer_tab" >
+        tools:layout="@layout/fragment_tab" >
         <action
             android:id="@+id/action_customerTabFragment_to_customerRestaurantFragment"
             app:destination="@id/customerRestaurantFragment"
@@ -50,9 +50,10 @@
         android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerRestaurantFragment"
         android:label="fragment_customer_restaurant"
         tools:layout="@layout/fragment_customer_restaurant" />
+
     <fragment
-        android:id="@+id/driverMainFragment"
-        android:name="com.crimsom.mydelapp.ui.driver_mode.fragments.DriverMainFragment"
-        android:label="fragment_driver_main"
-        tools:layout="@layout/fragment_driver_main" />
+        android:id="@+id/driverTabFragment"
+        android:name="com.crimsom.mydelapp.ui.common.TabFragment"
+        android:label="fragment_driver_tab"
+        tools:layout="@layout/fragment_tab"/>
 </navigation>

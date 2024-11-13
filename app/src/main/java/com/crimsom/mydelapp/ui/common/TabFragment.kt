@@ -1,18 +1,20 @@
-package com.crimsom.mydelapp.ui.customer_mode.fragments
+package com.crimsom.mydelapp.ui.common
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.crimsom.mydelapp.R
-import com.crimsom.mydelapp.databinding.FragmentCustomerTabBinding
-import com.crimsom.mydelapp.ui.customer_mode.adapters.TabViewPagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.crimsom.mydelapp.MainActivity
+import com.crimsom.mydelapp.databinding.FragmentTabBinding
+import com.crimsom.mydelapp.ui.customer_mode.adapters.CustomerTabViewPagerAdapter
+import com.crimsom.mydelapp.ui.driver_mode.adapters.DriverTabViewPagerAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
-class CustomerTabFragment : Fragment() {
+class TabFragment : Fragment() {
 
-    private lateinit var binding : FragmentCustomerTabBinding;
+    private lateinit var binding : FragmentTabBinding;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +24,7 @@ class CustomerTabFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCustomerTabBinding.inflate(inflater, container, false)
+        binding = FragmentTabBinding.inflate(inflater, container, false)
 
         setupTabLayout();
         deactivateSwipeChange();
@@ -31,7 +33,13 @@ class CustomerTabFragment : Fragment() {
     }
 
     private fun setupTabLayout(){
-        val viewPagerAdapter = TabViewPagerAdapter(this)
+        val viewPagerAdapter : FragmentStateAdapter;
+        if(MainActivity.IS_CURRENT_USER_DRIVER){
+            viewPagerAdapter = DriverTabViewPagerAdapter(this)
+        }else{
+            viewPagerAdapter = CustomerTabViewPagerAdapter(this)
+        }
+
         binding.tabViewPager.adapter = viewPagerAdapter
 
         val tabTitles = listOf<String>("Main", "Profile")
