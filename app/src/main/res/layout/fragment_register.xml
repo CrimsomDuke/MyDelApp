@@ -16,10 +16,25 @@
         android:src="@drawable/ic_launcher_foreground" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/register_usernameInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="10dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/register_usernameField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            android:textSize="20sp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/register_emailInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:padding="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -34,7 +49,7 @@
         android:id="@+id/register_passwordInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:padding="10dp">
 
         <com.google.android.material.textfield.TextInputEditText

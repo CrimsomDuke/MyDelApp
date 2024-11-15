@@ -12,10 +12,6 @@ import com.crimsom.mydelapp.models.Order
 class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<HistoryOrderAdapter.HistoryOrderViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryOrderViewHolder {
-        for(order in orderList){
-            println("Order: ${order.id} ${order.restauranteId} ${order.direccion} ${order.choferId} ${order.fechaHora} ${order.estado}")
-        }
-        println("------")
         return HistoryOrderViewHolder(CustOrderListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).root)
     }
 
@@ -46,11 +42,6 @@ class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<Hi
                 }
                 itemView.setBackgroundResource(R.drawable.round_shape_white)
             }else{
-                binding.apply {
-                    custOrdRestaurantLabel.setTextColor(Color.WHITE)
-                    custOrdAddressLabel.setTextColor(Color.WHITE)
-                    custOrdDriverLabel.setTextColor(Color.WHITE)
-                }
                 itemView.setBackgroundResource(R.drawable.round_shape)
             }
 

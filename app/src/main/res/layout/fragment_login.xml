@@ -20,7 +20,7 @@
         android:id="@+id/login_emailInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:padding="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -35,7 +35,7 @@
         android:id="@+id/login_passwordInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:padding="10dp">
 
         <com.google.android.material.textfield.TextInputEditText

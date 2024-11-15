@@ -49,11 +49,21 @@
         android:id="@+id/customerRestaurantFragment"
         android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerRestaurantFragment"
         android:label="fragment_customer_restaurant"
-        tools:layout="@layout/fragment_customer_restaurant" />
+        tools:layout="@layout/fragment_customer_restaurant" >
+        <action
+            android:id="@+id/action_customerRestaurantFragment_to_shoppingCartFragment"
+            app:destination="@id/shoppingCartFragment"
+            app:enterAnim="@android:anim/slide_in_left" />
+    </fragment>
 
     <fragment
         android:id="@+id/driverTabFragment"
         android:name="com.crimsom.mydelapp.ui.common.TabFragment"
         android:label="fragment_driver_tab"
         tools:layout="@layout/fragment_tab"/>
+    <fragment
+        android:id="@+id/shoppingCartFragment"
+        android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.ShoppingCartFragment"
+        android:label="fragment_shopping_cart"
+        tools:layout="@layout/fragment_shopping_cart" />
 </navigation>

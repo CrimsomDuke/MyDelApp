@@ -39,11 +39,6 @@ class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAda
                 }
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape_white)
             }else{
-                binding.apply {
-                    custOrdRestaurantLabel.setTextColor(Color.WHITE)
-                    custOrdAddressLabel.setTextColor(Color.WHITE)
-                    custOrdDriverLabel.setTextColor(Color.WHITE)
-                }
                 itemView.setBackgroundResource(R.drawable.round_shape)
             }
 

@@ -4,13 +4,12 @@ import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.models.Product
 import com.crimsom.mydelapp.models.Restaurant
 import com.crimsom.mydelapp.models.User
-import retrofit2.http.Body
 
 object FakeDB {
 
     var users = mutableListOf<User>(
-        User(1, "user", "password", tipoUsuario = 1),
-        User(2, "chofer", "password", tipoUsuario = 2)
+        User(1, "User", "user", "password", tipoUsuario = 1),
+        User(2, "Chofer" , "chofer", "password", tipoUsuario = 2)
     )
 
     var restaurants = mutableListOf<Restaurant>(
@@ -36,12 +35,12 @@ object FakeDB {
     )
 
     var product = mutableListOf<Product>(
-        Product(1, "Hamburguesa", 1),
-        Product(2, "Papas", 1),
-        Product(3, "Refresco", 1),
-        Product(4, "Hamburguesa", 2),
-        Product(5, "Papas", 2),
-        Product(6, "Refresco", 2),
+        Product(1, "Hamburguesa", 1, 32),
+        Product(2, "Papas", 1, 20),
+        Product(3, "Refresco", 1, 10),
+        Product(4, "Hamburguesa", 2, 25),
+        Product(5, "Papas", 2, 45),
+        Product(6, "Refresco", 2, 46),
     )
 
     fun getProductsByRestaurantId(restaurantId: Int): List<Product> {
@@ -52,8 +51,8 @@ object FakeDB {
         return users.find { it.email == email && it.password == password }
     }
 
-    fun register(email: String, password: String): User {
-        var newUser = User(users.size + 1, email, password)
+    fun register(username : String, email: String, password: String): User {
+        var newUser = User(users.size + 1, username, email, password)
         users.add(newUser)
         return newUser
     }

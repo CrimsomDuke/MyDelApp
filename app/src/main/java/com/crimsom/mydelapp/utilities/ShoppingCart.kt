@@ -27,4 +27,18 @@ object ShoppingCart  {
         return items.filter { it.id == product.id }.size;
     }
 
+    fun getProductsInCartList(): List<ProductInCartViewModel>{
+        var productsInCart = mutableListOf<ProductInCartViewModel>();
+        items.distinct().forEach {
+            productsInCart.add(ProductInCartViewModel(it, getProductCount(it)));
+        }
+        return productsInCart;
+    }
+
+    class ProductInCartViewModel(var product: Product, var quantity: Int){
+        fun getTotalPrice(): Int {
+            return product.price * quantity;
+        }
+    }
+
 }

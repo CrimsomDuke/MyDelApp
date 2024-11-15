@@ -1,6 +1,6 @@
 package com.crimsom.mydelapp.models
 
-data class Product(val id : Int, var nombre : String, var restaurantId : Int) {
+data class Product(val id : Int, var nombre : String, var restaurantId : Int, var price : Int) {
 
     var descripcion : String = "";
     var imageUrl : String = "";

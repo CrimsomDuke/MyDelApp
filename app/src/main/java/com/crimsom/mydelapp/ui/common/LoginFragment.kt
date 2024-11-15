@@ -44,6 +44,16 @@ class LoginFragment : Fragment() {
             var email = binding.loginEmailField.text.toString()
             var password = binding.loginPasswordField.text.toString()
 
+            if(email.length < 4) binding.loginEmailInputLayout.apply {
+                error = "Al menos 4 letras"
+                return@setOnClickListener
+            }
+
+            if(password.length < 4) binding.loginPasswordInputLayout.apply {
+                error = "Al menos 4 letras"
+                return@setOnClickListener
+            }
+
             var currentUser : User? = FakeDB.login(email, password)
 
             if(currentUser != null){

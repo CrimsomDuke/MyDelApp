@@ -38,10 +38,26 @@ class RegisterFragment : Fragment() {
         }
 
         binding.registerButton.setOnClickListener{
+            var username = binding.registerUsernameField.text.toString()
             var email = binding.registerEmailField.text.toString()
             var password = binding.registerPasswordField.text.toString()
 
-            FakeDB.register(email, password)
+            if(username.length < 4) binding.registerUsernameInputLayout.apply {
+                error = "Usuario debe tener al menos 4 letras";
+                return@setOnClickListener;
+            }
+
+            if(email.length < 4) binding.registerEmailInputLayout.apply {
+                error = "Email debe tener al menos 4 letras";
+                return@setOnClickListener;
+            }
+
+            if(password.length < 4) binding.registerPasswordInputLayout.apply {
+                error = "Contraseña debe tener al menos 4 letras";
+                return@setOnClickListener;
+            }
+
+            FakeDB.register(username, email, password)
 
             Toast.makeText(context, "User registered", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack(R.id.loginFragment, false)
