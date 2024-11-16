@@ -10,6 +10,7 @@ import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentDriverMainBinding
 import com.crimsom.mydelapp.ui.driver_mode.adapters.UntakenOrderAdapter
+import com.crimsom.mydelapp.utilities.Auth
 
 
 class DriverMainFragment : Fragment() {
@@ -27,6 +28,7 @@ class DriverMainFragment : Fragment() {
     ): View? {
         binding = FragmentDriverMainBinding.inflate(inflater, container, false)
 
+        this.setupDriverDetails();
         this.setupRecyclerViews();
 
         return binding.root
@@ -37,5 +39,10 @@ class DriverMainFragment : Fragment() {
             adapter = UntakenOrderAdapter(FakeDB.getUntakenOrders())
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
         }
+    }
+
+    private fun setupDriverDetails(){
+        binding.driverWelcomeLabel.text = "Bienvenido, ${Auth.currentUser.username}. " +
+                "Estas son las ordenes disponibles"
     }
 }

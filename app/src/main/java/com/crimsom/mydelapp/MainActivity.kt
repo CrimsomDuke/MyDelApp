@@ -8,14 +8,6 @@ import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
 
-    companion object{
-
-        var IS_CURRENT_USER_DRIVER = false;
-
-        var currentUserId : Int = 0
-        var selectedRestaurantId : Int = 0;
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

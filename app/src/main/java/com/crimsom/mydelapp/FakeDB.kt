@@ -13,9 +13,9 @@ object FakeDB {
     )
 
     var restaurants = mutableListOf<Restaurant>(
-        Restaurant(1, "McDonalds", 2),
-        Restaurant(2, "Burger King", 2),
-        Restaurant(3, "KFC", 2),
+        Restaurant(1, "McDonalds"),
+        Restaurant(2, "Burger King"),
+        Restaurant(3, "KFC"),
     )
 
     var orders = mutableListOf<Order>(
@@ -41,18 +41,25 @@ object FakeDB {
         Product(4, "Hamburguesa", 2, 25),
         Product(5, "Papas", 2, 45),
         Product(6, "Refresco", 2, 46),
+        Product(7, "Hamburguesa Loca", 1, 36),
+        Product(8, "Papas Locas", 1, 22),
+        Product(9, "Refresco Loca", 1, 12),
+        Product(10, "Hamburguesa Missisipi", 2, 27),
+        Product(11, "Papas Missisipi", 1, 47),
+        Product(12, "Refresco Missisipi", 1, 48),
+
     )
 
     fun getProductsByRestaurantId(restaurantId: Int): List<Product> {
         return product.filter { it.restaurantId == restaurantId }
     }
 
-    fun login(email: String, password: String): User? {
-        return users.find { it.email == email && it.password == password }
+    fun login(user : User): User? {
+        return users.find { it.email == user.email && it.password == user.password }
     }
 
-    fun register(username : String, email: String, password: String): User {
-        var newUser = User(users.size + 1, username, email, password)
+    fun register(user : User): User {
+        var newUser = User(users.size + 1, user.username, user.email, user.password, user.tipoUsuario)
         users.add(newUser)
         return newUser
     }

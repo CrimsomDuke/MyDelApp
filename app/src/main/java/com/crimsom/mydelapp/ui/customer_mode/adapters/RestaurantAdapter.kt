@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.OnRestaurantClickListener
 import com.crimsom.mydelapp.databinding.RestaurantListItemBinding
@@ -37,13 +39,20 @@ class RestaurantAdapter(var restaurantsList : List<Restaurant>, var onRestaurant
         }
 
         public fun bind(restaurant: Restaurant, onRestaurantClickListener: OnRestaurantClickListener){
-            binding.restaurantNameLabel.text = restaurant.nombre
-            binding.restaurantImage.setImageResource(R.drawable.ic_launcher_foreground)
-
+            binding.restaurantNameLabel.text = restaurant.name
             binding.restaurantLayout.setOnClickListener{
                 onRestaurantClickListener.onRestaurantClick(restaurant.id);
             }
 
+            if(restaurant.logoUrl.contains("placehold") || restaurant.logoUrl.isEmpty()){
+                binding.restaurantImage.setImageResource(R.drawable.ic_launcher_foreground)
+            }else{
+                Glide
+                    .with(itemView.context)
+                    .load(restaurant.logoUrl)
+                    .transform(RoundedCorners(20))
+                    .into(binding.restaurantImage)
+            }
         }
     }
 }

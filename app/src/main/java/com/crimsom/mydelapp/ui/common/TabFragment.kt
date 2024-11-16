@@ -10,6 +10,7 @@ import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.databinding.FragmentTabBinding
 import com.crimsom.mydelapp.ui.customer_mode.adapters.CustomerTabViewPagerAdapter
 import com.crimsom.mydelapp.ui.driver_mode.adapters.DriverTabViewPagerAdapter
+import com.crimsom.mydelapp.utilities.Auth
 import com.google.android.material.tabs.TabLayoutMediator
 
 class TabFragment : Fragment() {
@@ -34,7 +35,7 @@ class TabFragment : Fragment() {
 
     private fun setupTabLayout(){
         val viewPagerAdapter : FragmentStateAdapter;
-        if(MainActivity.IS_CURRENT_USER_DRIVER){
+        if(Auth.IS_CURRENT_USER_DRIVER){
             viewPagerAdapter = DriverTabViewPagerAdapter(this)
         }else{
             viewPagerAdapter = CustomerTabViewPagerAdapter(this)

@@ -30,7 +30,7 @@ class ProductsInCartAdapter(var productsInCartList : List<ShoppingCart.ProductIn
         }
 
         public fun bind(productInCart: ShoppingCart.ProductInCartViewModel){
-            binding.cartProductName.text = productInCart.product.nombre;
+            binding.cartProductName.text = productInCart.product.name;
             binding.cartProductQuantity.text = "Cantidad: " + productInCart.quantity.toString();
             binding.cartProductTotal.text = "Total: " + productInCart.getTotalPrice().toString();
 

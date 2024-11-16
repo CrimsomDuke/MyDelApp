@@ -1,7 +1,14 @@
 package com.crimsom.mydelapp.models
 
-data class Product(val id : Int, var nombre : String, var restaurantId : Int, var price : Int) {
+import com.google.gson.annotations.SerializedName
 
-    var descripcion : String = "";
-    var imageUrl : String = "";
+data class Product(
+    val id : Int,
+    var name : String,
+    @SerializedName("restaurant_id") var restaurantId : Int,
+    var price : Int
+) {
+
+    var description : String = "";
+    var image : String = "";
 }

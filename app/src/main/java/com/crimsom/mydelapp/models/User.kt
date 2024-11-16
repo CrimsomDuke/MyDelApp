@@ -1,5 +1,14 @@
 package com.crimsom.mydelapp.models
 
-data class User(var id : Int, var username : String, var email : String, var password : String, var tipoUsuario : Int = 1) {
+import com.crimsom.mydelapp.models.aux_models.Profile
+import com.google.gson.annotations.SerializedName
 
+data class User(
+    var id : Int,
+    @SerializedName("name") var username : String,
+    @SerializedName("email") var email : String,
+    @SerializedName("password") var password : String = "",
+    var tipoUsuario : Int = 1
+) {
+    @SerializedName("profile") var profile : Profile = Profile(0, 1);
 }

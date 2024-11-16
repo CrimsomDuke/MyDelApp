@@ -1,10 +1,17 @@
 package com.crimsom.mydelapp.models
 
-data class Restaurant(var id : Int, var nombre : String, var propietarioId : Int) {
+import com.google.gson.annotations.SerializedName
 
-    var direccion : String = "";
-    var latitud : Double = 0.0;
-    var longitud : Double = 0.0;
-    var logoUrl : String = "";
+data class Restaurant(
+    var id : Int,
+    var name : String
+) {
+
+    var address : String = "";
+    var latitude : String = "";
+    var longitude : String = "";
+    @SerializedName("logo") var logoUrl : String = "";
+
+    @SerializedName("products") var productsList : List<Product> = mutableListOf();
 
 }

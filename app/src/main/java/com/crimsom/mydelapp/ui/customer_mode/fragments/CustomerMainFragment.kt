@@ -8,18 +8,20 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.FakeDB
-import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.OnRestaurantClickListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerMainBinding
-import com.crimsom.mydelapp.models.Restaurant
 import com.crimsom.mydelapp.ui.customer_mode.adapters.OrderAdapter
 import com.crimsom.mydelapp.ui.customer_mode.adapters.RestaurantAdapter
+import com.crimsom.mydelapp.ui.customer_mode.viewmodels.MainCustomerViewModel
+import com.crimsom.mydelapp.utilities.Auth
 import com.crimsom.mydelapp.utilities.ShoppingCart
 
 class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
 
     private lateinit var binding : FragmentCustomerMainBinding;
+
+    private var mainViewModel = MainCustomerViewModel();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,13 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
     ): View? {
         binding = FragmentCustomerMainBinding.inflate(inflater, container, false)
 
+        this.mainViewModel.getCurrentUser(Auth.access_token);
+        this.mainViewModel.getRestaurants(Auth.access_token);
+
+        this.binding.custWelcomeLabel.text = "Bienvenido ${mainViewModel.currentUser.value?.username} ¿Que pedirás hoy?"
+
         this.setupRecyclerViews()
+        this.setupObservers()
 
         return binding.root
     }
@@ -39,12 +47,12 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
     private fun setupRecyclerViews(){
 
         binding.rvRestaurants.apply {
-            adapter = RestaurantAdapter(FakeDB.restaurants, this@CustomerMainFragment)
+            adapter = RestaurantAdapter(mainViewModel.restaurantsList.value!!, this@CustomerMainFragment)
             layoutManager = LinearLayoutManager(context)
         }
 
         binding.rvPedidos.apply {
-            adapter = OrderAdapter(FakeDB.getOrdersByUserId(MainActivity.currentUserId))
+            adapter = OrderAdapter(FakeDB.getOrdersByUserId(Auth.currentUserId))
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
             }
@@ -54,13 +62,30 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
     override fun onResume() {
         super.onResume()
         //reset all values
-        MainActivity.selectedRestaurantId = 0;
-        ShoppingCart.reset();
+        clearData()
+
+    }
+
+    private fun setupObservers(){
+        mainViewModel.restaurantsList.observe(viewLifecycleOwner) {
+            binding.rvRestaurants.adapter.apply {
+                (this as RestaurantAdapter).updateData(it)
+            }
+        }
+
+        mainViewModel.currentUser.observe(viewLifecycleOwner) {
+            Auth.currentUser = it;
+        }
     }
 
     override fun onRestaurantClick(restaurantId: Int) {
-        MainActivity.selectedRestaurantId = restaurantId
+        Auth.selectedRestaurantId = restaurantId
         findNavController().navigate(R.id.action_customerTabFragment_to_customerRestaurantFragment)
+    }
+
+    private fun clearData(){
+        Auth.selectedRestaurantId = 0;
+        ShoppingCart.reset();
     }
 
 }

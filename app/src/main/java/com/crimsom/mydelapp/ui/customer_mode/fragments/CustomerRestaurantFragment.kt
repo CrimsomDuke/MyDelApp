@@ -8,15 +8,17 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.FakeDB
-import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentCustomerRestaurantBinding
 import com.crimsom.mydelapp.ui.customer_mode.adapters.ProductAdapter
+import com.crimsom.mydelapp.ui.customer_mode.viewmodels.RestaurantCustomerViewModel
+import com.crimsom.mydelapp.utilities.Auth
 
 
 class CustomerRestaurantFragment : Fragment() {
 
     private lateinit var binding : FragmentCustomerRestaurantBinding;
+    private var restaurantViewModel = RestaurantCustomerViewModel();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,22 +30,33 @@ class CustomerRestaurantFragment : Fragment() {
     ): View? {
         binding = FragmentCustomerRestaurantBinding.inflate(inflater, container, false)
 
+        this.restaurantViewModel.getProductsByRestaurantId(Auth.access_token, Auth.selectedRestaurantId);
+
         this.setupRestaurant();
         this.setupRecyclerViews();
         this.setupGoToCartButton();
+        this.setupObservers();
 
         return binding.root
     }
 
     private fun setupRestaurant(){
-        var restaurant = FakeDB.restaurants.find { it.id == MainActivity.selectedRestaurantId }
-        binding.custRestNameLabel.text = restaurant?.nombre
+        var restaurant = restaurantViewModel.restaurant.value
+        binding.custRestNameLabel.text = restaurant?.name
     }
 
     private fun setupRecyclerViews(){
         binding.rvProducts.apply {
-            adapter = ProductAdapter(FakeDB.getProductsByRestaurantId(MainActivity.selectedRestaurantId))
+            adapter = ProductAdapter(restaurantViewModel.restaurant.value!!.productsList)
             layoutManager = LinearLayoutManager(context)
+        }
+    }
+    private fun setupObservers(){
+        this.restaurantViewModel.restaurant.observe(viewLifecycleOwner) {
+            this.setupRestaurant()
+            binding.rvProducts.adapter.apply {
+                (this as ProductAdapter).updateData(it.productsList)
+            }
         }
     }
 

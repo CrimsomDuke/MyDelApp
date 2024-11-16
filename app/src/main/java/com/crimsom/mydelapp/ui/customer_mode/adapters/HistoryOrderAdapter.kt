@@ -40,9 +40,14 @@ class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<Hi
                     custOrdAddressLabel.setTextColor(Color.BLACK)
                     custOrdDriverLabel.setTextColor(Color.BLACK)
                 }
-                itemView.setBackgroundResource(R.drawable.round_shape_white)
+                binding.orderLayout.setBackgroundResource(R.drawable.round_shape_white)
             }else{
-                itemView.setBackgroundResource(R.drawable.round_shape)
+                binding.apply {
+                    custOrdRestaurantLabel.setTextColor(Color.WHITE)
+                    custOrdAddressLabel.setTextColor(Color.WHITE)
+                    custOrdDriverLabel.setTextColor(Color.WHITE)
+                }
+                binding.orderLayout.setBackgroundResource(R.drawable.round_shape)
             }
 
             binding.custOrdRestaurantLabel.text = order.restauranteId.toString()

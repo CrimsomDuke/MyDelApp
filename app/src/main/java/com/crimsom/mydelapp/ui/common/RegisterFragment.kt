@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentRegisterBinding
+import com.crimsom.mydelapp.models.User
 
 class RegisterFragment : Fragment() {
 
@@ -57,7 +58,10 @@ class RegisterFragment : Fragment() {
                 return@setOnClickListener;
             }
 
-            FakeDB.register(username, email, password)
+            var userType = if(binding.registerIsDriverCheckbox.isChecked) 2 else 1
+            val registerUser = User(0, username, email, password, userType)
+
+            FakeDB.register(registerUser)
 
             Toast.makeText(context, "User registered", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack(R.id.loginFragment, false)

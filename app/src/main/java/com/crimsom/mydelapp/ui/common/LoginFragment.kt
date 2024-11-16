@@ -7,11 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
-import com.crimsom.mydelapp.FakeDB
-import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentLoginBinding
-import com.crimsom.mydelapp.models.User
+import com.crimsom.mydelapp.models.aux_models.LoginRequest
+import com.crimsom.mydelapp.repositories.UserRepository
+import com.crimsom.mydelapp.utilities.Auth
 
 class LoginFragment : Fragment() {
 
@@ -54,23 +54,40 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            var currentUser : User? = FakeDB.login(email, password)
-
-            if(currentUser != null){
-                Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
-
-                MainActivity.currentUserId = currentUser.id;
-
-                if(!FakeDB.isDriver(currentUser)){
-                    MainActivity.IS_CURRENT_USER_DRIVER = false;
-                    this.goToCustomerMode();
-                }else{
-                    MainActivity.IS_CURRENT_USER_DRIVER = true;
-                    this.goToDriverMode()
-                }
-            }
+            var loginRequest = LoginRequest(email, password)
+            UserRepository.login(loginRequest, onSuccess = {
+                Auth.access_token = it.access_token;
+                processToken(it.access_token)
+            }, onError = {
+                Toast.makeText(context, "Error al login papu", Toast.LENGTH_SHORT).show()
+            })
         }
 
+    }
+
+    private fun processToken(token : String){
+
+        UserRepository.getMe(token, onSuccess = {
+            Toast.makeText(context, "Login successful", Toast.LENGTH_SHORT).show()
+
+
+            //we set the values of the user in the Auth object
+            Auth.currentUser = it;
+            Auth.currentUserId = it.id;
+
+            println("User id: ${it.id} con tipo ${it.tipoUsuario} y username ${it.username} y email ${it.email}")
+
+            if(!Auth.isDriver(it)){
+                Auth.IS_CURRENT_USER_DRIVER = false;
+                this.goToCustomerMode();
+            }else{
+                Auth.IS_CURRENT_USER_DRIVER = true;
+                this.goToDriverMode()
+            }
+
+        }, onError = {
+            Toast.makeText(context, "Error al obtener usuario", Toast.LENGTH_SHORT).show()
+        })
     }
 
     private fun goToCustomerMode(){
