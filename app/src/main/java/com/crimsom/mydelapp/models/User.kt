@@ -8,7 +8,7 @@ data class User(
     @SerializedName("name") var username : String,
     @SerializedName("email") var email : String,
     @SerializedName("password") var password : String = "",
-    var tipoUsuario : Int = 1
+    @SerializedName("role") var role : Int = 1
 ) {
     @SerializedName("profile") var profile : Profile = Profile(0, 1);
 }

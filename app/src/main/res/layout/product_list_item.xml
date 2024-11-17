@@ -14,6 +14,7 @@
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="5dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,16 +27,6 @@
             android:layout_margin="10dp"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/cust_rest_productPic"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_weight="0"
-                android:background="@drawable/round_shape_white"
-                android:scaleType="fitXY"
-                app:srcCompat="@android:drawable/ic_dialog_info" />
-
             <TextView
                 android:id="@+id/cust_rest_productNameLabel"
                 android:layout_width="wrap_content"
@@ -46,46 +37,89 @@
                 android:gravity="center"
                 android:text="NombreProducto"
                 android:textSize="20sp" />
+
+            <ImageView
+                android:id="@+id/cust_rest_productPic"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:background="@drawable/round_shape_white"
+                android:scaleType="fitXY"
+                app:srcCompat="@android:drawable/ic_dialog_info" />
+
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/buttonsGroup"
-            android:layout_width="162dp"
+            android:id="@+id/cust_prod_hideLayout"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:visibility="gone">
 
-            <Button
-                android:id="@+id/cust_rest_removeProductButton"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_weight="0"
-                android:text="-"
-                android:textSize="24sp" />
-
             <TextView
-                android:id="@+id/cust_rest_productCounterLabel"
-                android:layout_width="wrap_content"
+                android:id="@+id/cust_prod_descLabel"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_weight="0"
-                android:text="0"
-                android:textSize="24sp" />
+                android:padding="15dp"
+                android:text="Descripcion" />
 
-            <Button
-                android:id="@+id/cust_rest_addProductButton"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:layout_weight="0"
-                android:text="+"
-                android:textSize="24sp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/cust_prod_priceLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:padding="20dp"
+                    android:text="Bs0"
+                    android:textSize="20sp" />
+
+                <LinearLayout
+                    android:id="@+id/buttonsGroup"
+                    android:layout_width="162dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <Button
+                        android:id="@+id/cust_rest_removeProductButton"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0"
+                        android:text="-"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/cust_rest_productCounterLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0"
+                        android:text="0"
+                        android:textSize="20sp" />
+
+                    <Button
+                        android:id="@+id/cust_rest_addProductButton"
+                        android:layout_width="60dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:layout_weight="0"
+                        android:text="+"
+                        android:textSize="20sp" />
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

@@ -50,7 +50,7 @@ class RestaurantAdapter(var restaurantsList : List<Restaurant>, var onRestaurant
                 Glide
                     .with(itemView.context)
                     .load(restaurant.logoUrl)
-                    .transform(RoundedCorners(20))
+                    .transform(RoundedCorners(30))
                     .into(binding.restaurantImage)
             }
         }

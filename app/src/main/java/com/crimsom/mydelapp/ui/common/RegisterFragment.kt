@@ -1,5 +1,6 @@
 package com.crimsom.mydelapp.ui.common
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentRegisterBinding
 import com.crimsom.mydelapp.models.User
+import com.crimsom.mydelapp.repositories.UserRepository
+import com.techiness.progressdialoglibrary.ProgressDialog
 
 class RegisterFragment : Fragment() {
 
@@ -61,10 +64,37 @@ class RegisterFragment : Fragment() {
             var userType = if(binding.registerIsDriverCheckbox.isChecked) 2 else 1
             val registerUser = User(0, username, email, password, userType)
 
-            FakeDB.register(registerUser)
+            val progressDialog = startLoadingDialog();
 
-            Toast.makeText(context, "User registered", Toast.LENGTH_SHORT).show()
-            findNavController().popBackStack(R.id.loginFragment, false)
+            UserRepository.register(registerUser, onSuccess = {
+                Toast.makeText(context, "Usuario registrado: " + it.username, Toast.LENGTH_SHORT).show()
+
+                //dismiss
+                progressDialog.dismiss()
+
+                //return to login
+                Toast.makeText(context, "User registered", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack(R.id.loginFragment, false)
+            }, onError = {
+                progressDialog.dismiss()
+                Toast.makeText(context, "Error registrando el usuario", Toast.LENGTH_SHORT).show()
+            })
         }
+    }
+
+    private fun startLoadingDialog() : ProgressDialog {
+        var progressDialog = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            ProgressDialog(requireContext(), ProgressDialog.THEME_FOLLOW_SYSTEM)
+        } else {
+            ProgressDialog(requireContext())
+        }
+
+        with(progressDialog){
+            setMessage("Espere un momento...")
+            setTitle("Registrando usuario")
+            show()
+        }
+
+        return progressDialog;
     }
 }

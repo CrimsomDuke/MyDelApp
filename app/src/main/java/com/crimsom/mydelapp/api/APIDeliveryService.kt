@@ -1,5 +1,6 @@
 package com.crimsom.mydelapp.api
 
+import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.models.Product
 import com.crimsom.mydelapp.models.Restaurant
 import com.crimsom.mydelapp.models.User
@@ -62,5 +63,16 @@ interface APIDeliveryService {
         @Header("Authorization") token : String,
         @Header("Accept") accept : String = "application/json"
     ) : Call<List<Product>>
+
+
+    /*
+    * ORDERS MODULE
+     */
+
+    @GET("orders/free")
+    fun getFreeOrders(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+    ) : Call<List<Order>>
 
 }

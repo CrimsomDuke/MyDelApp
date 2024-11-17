@@ -1,17 +1,21 @@
 package com.crimsom.mydelapp.models
 
+import com.google.gson.annotations.SerializedName
 import java.util.Date
 
 data class Order(
     var id : Int,
-    var userId : Int,
-    var restauranteId : Int,
-    var total : Double,
-    var choferId : Int,
-    var latitude : Double,
-    var longitud : Double,
-    var estado : Int
+    @SerializedName("user_id") var userId : Int,
+    @SerializedName("restaurant_id") var restaurantId : Int,
+    @SerializedName("total") var total : Double,
+    @SerializedName("driver_id") var driverId : Int? = null,
+    @SerializedName("latitude") var latitude : String,
+    @SerializedName("longitude") var longitude : String,
+    @SerializedName("status") var status : Int
 ) {
-    public var fechaHora : Date = Date()
-    public var direccion : String = "Test temporal"
+    @SerializedName("created_at") public var createdAt : Date = Date()
+    @SerializedName("address") public var address : String = "Test temporal"
+    @SerializedName("delivery_proof") public var deliveryProofImg : String = "";
+
+    @SerializedName("order_details") public var orderDetails : List<OrderDetail> = listOf()
 }

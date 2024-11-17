@@ -24,9 +24,38 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cust_rvShopping_cart"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="500dp"
             android:layout_marginHorizontal="5dp"
-            android:layout_marginBottom="30dp" />
+            android:layout_marginBottom="10dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/cust_sc_totalLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="Total: "
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/cust_sc_addressField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:ems="10"
+                android:hint="Direccion"
+                android:inputType="text"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button

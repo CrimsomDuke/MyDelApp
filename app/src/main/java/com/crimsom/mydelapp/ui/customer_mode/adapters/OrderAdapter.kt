@@ -31,7 +31,7 @@ class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAda
 
         public fun bind(order: Order){
 
-            if(order.estado == 3){
+            if(order.status == 3){
                 binding.apply {
                     custOrdRestaurantLabel.setTextColor(Color.BLACK)
                     custOrdAddressLabel.setTextColor(Color.BLACK)
@@ -47,9 +47,9 @@ class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAda
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape)
             }
 
-            binding.custOrdRestaurantLabel.text = order.restauranteId.toString()
-            binding.custOrdAddressLabel.text = order.direccion;
-            binding.custOrdDriverLabel.text = order.choferId.toString();
+            binding.custOrdRestaurantLabel.text = order.restaurantId.toString()
+            binding.custOrdAddressLabel.text = order.address;
+            binding.custOrdDriverLabel.text = order.driverId.toString();
 
         }
     }

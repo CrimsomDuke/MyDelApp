@@ -37,6 +37,32 @@ object UserRepository {
         })
     }
 
+    fun register(
+        user: User,
+        onSuccess: (User) -> Unit,
+        onError: (Throwable) -> Unit
+    ){
+        val retrofit = RetrofitRepository.getRetrofitInstance()
+        val service = retrofit.create(APIDeliveryService::class.java)
+
+        service.register(user).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                if (response.isSuccessful) {
+                    val user = response.body()!!
+                    onSuccess(user)
+                } else {
+                    onError(Throwable("Error in the request: ${response.code()}"))
+                }
+
+                HttpLogger.logResponse(response)
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                onError(t) // Pass the error to the callback
+            }
+        })
+    }
+
     fun getMe(
         authToken : String,
         onSuccess: (User) -> Unit,

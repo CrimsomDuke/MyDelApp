@@ -1,5 +1,6 @@
 package com.crimsom.mydelapp.ui.common
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.crimsom.mydelapp.databinding.FragmentLoginBinding
 import com.crimsom.mydelapp.models.aux_models.LoginRequest
 import com.crimsom.mydelapp.repositories.UserRepository
 import com.crimsom.mydelapp.utilities.Auth
+import com.techiness.progressdialoglibrary.ProgressDialog
 
 class LoginFragment : Fragment() {
 
@@ -54,11 +56,17 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            var progressDialog = startLoadingDialog();
+
             var loginRequest = LoginRequest(email, password)
             UserRepository.login(loginRequest, onSuccess = {
+                //we dismiss the dialog
+                progressDialog.dismiss()
+
                 Auth.access_token = it.access_token;
                 processToken(it.access_token)
             }, onError = {
+                progressDialog.dismiss()
                 Toast.makeText(context, "Error al login papu", Toast.LENGTH_SHORT).show()
             })
         }
@@ -75,7 +83,7 @@ class LoginFragment : Fragment() {
             Auth.currentUser = it;
             Auth.currentUserId = it.id;
 
-            println("User id: ${it.id} con tipo ${it.tipoUsuario} y username ${it.username} y email ${it.email}")
+            println("User id: ${it.id} con tipo ${it.role} y username ${it.username} y email ${it.email}")
 
             if(!Auth.isDriver(it)){
                 Auth.IS_CURRENT_USER_DRIVER = false;
@@ -98,5 +106,21 @@ class LoginFragment : Fragment() {
     private fun goToDriverMode(){
         var navController = findNavController()
         navController.navigate(R.id.action_loginFragment_to_driverTabFragment);
+    }
+
+    private fun startLoadingDialog() : ProgressDialog{
+        var progressDialog = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            ProgressDialog(requireContext(), ProgressDialog.THEME_FOLLOW_SYSTEM)
+        } else {
+            ProgressDialog(requireContext())
+        }
+
+        with(progressDialog){
+            setMessage("Espere un momento...")
+            setTitle("Iniciando sesión")
+            show()
+        }
+
+        return progressDialog;
     }
 }

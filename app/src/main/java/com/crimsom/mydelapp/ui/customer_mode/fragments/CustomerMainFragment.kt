@@ -79,12 +79,12 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
     }
 
     override fun onRestaurantClick(restaurantId: Int) {
-        Auth.selectedRestaurantId = restaurantId
+        Auth.cust_selectedRestaurantId = restaurantId
         findNavController().navigate(R.id.action_customerTabFragment_to_customerRestaurantFragment)
     }
 
     private fun clearData(){
-        Auth.selectedRestaurantId = 0;
+        Auth.cust_selectedRestaurantId = 0;
         ShoppingCart.reset();
     }
 

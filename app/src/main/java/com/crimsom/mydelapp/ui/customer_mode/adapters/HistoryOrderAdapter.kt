@@ -34,7 +34,7 @@ class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<Hi
         public fun bind(order: Order){
 
             //I must add the else stmt, because without it the color changes in the slide
-            if(order.estado == 3){
+            if(order.status == 3){
                 binding.apply {
                     custOrdRestaurantLabel.setTextColor(Color.BLACK)
                     custOrdAddressLabel.setTextColor(Color.BLACK)
@@ -50,12 +50,12 @@ class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<Hi
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape)
             }
 
-            binding.custOrdRestaurantLabel.text = order.restauranteId.toString()
-            binding.custOrdAddressLabel.text = order.direccion;
-            binding.custOrdDriverLabel.text = order.choferId.toString();
+            binding.custOrdRestaurantLabel.text = order.restaurantId.toString()
+            binding.custOrdAddressLabel.text = order.address;
+            binding.custOrdDriverLabel.text = order.driverId.toString();
 
             binding.custOrdDateLabel.visibility = View.VISIBLE;
-            binding.custOrdDateLabel.text = order.fechaHora.toString();
+            binding.custOrdDateLabel.text = order.createdAt.toString();
         }
     }
 

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentCustomerRestaurantBinding
 import com.crimsom.mydelapp.ui.customer_mode.adapters.ProductAdapter
@@ -30,7 +29,7 @@ class CustomerRestaurantFragment : Fragment() {
     ): View? {
         binding = FragmentCustomerRestaurantBinding.inflate(inflater, container, false)
 
-        this.restaurantViewModel.getProductsByRestaurantId(Auth.access_token, Auth.selectedRestaurantId);
+        this.restaurantViewModel.getProductsByRestaurantId(Auth.access_token, Auth.cust_selectedRestaurantId);
 
         this.setupRestaurant();
         this.setupRecyclerViews();

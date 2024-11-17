@@ -60,7 +60,11 @@
         android:id="@+id/driverTabFragment"
         android:name="com.crimsom.mydelapp.ui.common.TabFragment"
         android:label="fragment_driver_tab"
-        tools:layout="@layout/fragment_tab"/>
+        tools:layout="@layout/fragment_tab">
+        <action
+            android:id="@+id/action_driverTabFragment_to_driverFullOrderFragment"
+            app:destination="@id/driverFullOrderFragment" />
+    </fragment>
     <fragment
         android:id="@+id/shoppingCartFragment"
         android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.ShoppingCartFragment"
@@ -71,4 +75,9 @@
         app:destination="@id/loginFragment"
         app:enterAnim="@anim/nav_default_enter_anim"
         app:exitAnim="@anim/nav_default_exit_anim" />
+    <fragment
+        android:id="@+id/driverFullOrderFragment"
+        android:name="com.crimsom.mydelapp.ui.driver_mode.fragments.DriverFullOrderFragment"
+        android:label="fragment_driver_full_order"
+        tools:layout="@layout/fragment_driver_full_order" />
 </navigation>

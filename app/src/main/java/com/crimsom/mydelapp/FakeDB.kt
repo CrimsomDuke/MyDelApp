@@ -8,8 +8,8 @@ import com.crimsom.mydelapp.models.User
 object FakeDB {
 
     var users = mutableListOf<User>(
-        User(1, "User", "user", "password", tipoUsuario = 1),
-        User(2, "Chofer" , "chofer", "password", tipoUsuario = 2)
+        User(1, "User", "user", "password", role = 1),
+        User(2, "Chofer" , "chofer", "password", role = 2)
     )
 
     var restaurants = mutableListOf<Restaurant>(
@@ -19,19 +19,19 @@ object FakeDB {
     )
 
     var orders = mutableListOf<Order>(
-        Order(1, 1, 1, 40.0, 2, 100.0, 100.0, 1),
-        Order(2, 1, 2, 50.0, 2, 100.0, 100.0, 1),
-        Order(3, 1, 3, 60.0, 2, 100.0, 100.0, 0),
-        Order(4, 1, 1, 40.0, 2, 100.0, 100.0, 0),
-        Order(5, 1, 2, 50.0, 2, 100.0, 100.0, 0),
-        Order(1, 1, 1, 40.0, 2, 100.0, 100.0, 0),
-        Order(4, 1, 1, 40.0, 2, 100.0, 100.0, 3),
-        Order(5, 1, 2, 50.0, 2, 100.0, 100.0, 3),
-        Order(1, 1, 1, 40.0, 2, 100.0, 100.0, 3),
-        Order(4, 1, 1, 40.0, 2, 100.0, 100.0, 1),
-        Order(5, 1, 2, 50.0, 2, 100.0, 100.0, 1),
-        Order(1, 1, 1, 40.0, 2, 100.0, 100.0, 0),
-        Order(4, 1, 1, 40.0, 2, 100.0, 100.0, 2),
+        Order(1, 1, 1, 40.0, 2, "100.0", "100.0", 1),
+        Order(2, 1, 2, 50.0, 2, "100.0", "100.0", 1),
+        Order(3, 1, 3, 60.0, 2, "100.0", "100.0", 0),
+        Order(4, 1, 1, 40.0, 2, "100.0", "100.0", 0),
+        Order(5, 1, 2, 50.0, 2, "100.0", "100.0", 0),
+        Order(1, 1, 1, 40.0, 2, "100.0", "100.0", 0),
+        Order(4, 1, 1, 40.0, 2, "100.0", "100.0", 3),
+        Order(5, 1, 2, 50.0, 2, "100.0", "100.0", 3),
+        Order(1, 1, 1, 40.0, 2, "100.0", "100.0", 3),
+        Order(4, 1, 1, 40.0, 2, "100.0", "100.0", 1),
+        Order(5, 1, 2, 50.0, 2, "100.0", "100.0", 1),
+        Order(1, 1, 1, 40.0, 2, "100.0", "100.0", 0),
+        Order(4, 1, 1, 40.0, 2, "100.0", "100.0", 2),
     )
 
     var product = mutableListOf<Product>(
@@ -59,7 +59,7 @@ object FakeDB {
     }
 
     fun register(user : User): User {
-        var newUser = User(users.size + 1, user.username, user.email, user.password, user.tipoUsuario)
+        var newUser = User(users.size + 1, user.username, user.email, user.password, user.role)
         users.add(newUser)
         return newUser
     }
@@ -69,11 +69,11 @@ object FakeDB {
     }
 
     fun getUntakenOrders(): List<Order> {
-        return orders.filter { it.estado == 0 }
+        return orders.filter { it.status == 0 }
     }
 
     fun isDriver(user : User) : Boolean{
-        return user.tipoUsuario == 2
+        return user.role == 2
     }
 
     fun getUserById(userId: Int): User? {

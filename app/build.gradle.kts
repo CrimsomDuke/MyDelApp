@@ -42,6 +42,8 @@ android {
 
 dependencies {
 
+    implementation(libs.progress.dialog)
+
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
 
@@ -61,6 +63,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics.android)
     implementation(libs.play.services.maps)
     implementation(libs.play.services.auth)
+    implementation(libs.cronet.embedded)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

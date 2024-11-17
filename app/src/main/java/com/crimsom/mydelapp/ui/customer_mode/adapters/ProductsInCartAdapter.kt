@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.ProductInCartListItemBinding
 import com.crimsom.mydelapp.utilities.ShoppingCart
@@ -35,8 +37,14 @@ class ProductsInCartAdapter(var productsInCartList : List<ShoppingCart.ProductIn
             binding.cartProductTotal.text = "Total: " + productInCart.getTotalPrice().toString();
 
             //cargar imagen con glide
-            //TEMP IMAGE
-            binding.cartProductImage.setImageResource(R.drawable.ic_launcher_foreground);
+            if(productInCart.product.image.contains("placehold") || productInCart.product.image.isEmpty()){
+                binding.cartProductImage.setImageResource(R.drawable.round_shape);
+            }else{
+                Glide.with(itemView.context)
+                    .load(productInCart.product.image)
+                    .transform(RoundedCorners(30))
+                    .into(binding.cartProductImage);
+            }
         }
     }
 }

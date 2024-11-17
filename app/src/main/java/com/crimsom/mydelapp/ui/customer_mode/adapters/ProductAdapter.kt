@@ -41,8 +41,10 @@ class ProductAdapter(var productList : List<Product>) : RecyclerView.Adapter<Pro
 
             //load current quantity
             binding.custRestProductCounterLabel.text = ShoppingCart.getProductCount(product).toString()
-
             binding.custRestProductNameLabel.text = product.name;
+            binding.custProdDescLabel.text = product.description;
+            binding.custProdPriceLabel.text = "Bs${product.price}";
+
             binding.custRestAddProductButton.setOnClickListener {
                 listener.onProductAdd(product)
                 binding.custRestProductCounterLabel.text = ShoppingCart.getProductCount(product).toString()
@@ -54,10 +56,10 @@ class ProductAdapter(var productList : List<Product>) : RecyclerView.Adapter<Pro
             }
 
             binding.productLayout.setOnClickListener {
-                if(binding.buttonsGroup.visibility == View.VISIBLE){
-                    binding.buttonsGroup.visibility = View.GONE
+                if(binding.custProdHideLayout.visibility == View.VISIBLE){
+                    binding.custProdHideLayout.visibility = View.GONE
                 }else{
-                    binding.buttonsGroup.visibility = View.VISIBLE
+                    binding.custProdHideLayout.visibility = View.VISIBLE
                 }
             }
 
@@ -67,7 +69,7 @@ class ProductAdapter(var productList : List<Product>) : RecyclerView.Adapter<Pro
                 Glide
                     .with(itemView.context)
                     .load(product.image)
-                    .transform(RoundedCorners(16))
+                    .transform(RoundedCorners(30))
                     .into(binding.custRestProductPic);
 
             }

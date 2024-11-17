@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/orderLayout"
+    android:id="@+id/untakenOrderLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
@@ -13,11 +13,11 @@
     android:padding="20dp">
 
     <TextView
-        android:id="@+id/driver_ord_CustomerName"
+        android:id="@+id/driver_ord_addressLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Nombre Cliente"
+        android:text="Direccion"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textColor="#FDFDFD"
         android:textSize="24sp" />
@@ -32,11 +32,11 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/cust_ord_restaurantLabel"
+        android:id="@+id/driver_ord_orderIdLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="Restaurant"
+        android:text="Pedido:"
         android:textColor="#B4B1B1"
         android:textSize="16sp" />
 
