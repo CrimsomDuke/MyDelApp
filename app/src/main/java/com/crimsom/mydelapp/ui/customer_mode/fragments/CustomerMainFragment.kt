@@ -35,6 +35,7 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
 
         this.mainViewModel.getCurrentUser(Auth.access_token);
         this.mainViewModel.getRestaurants(Auth.access_token);
+        this.mainViewModel.getOrderOfUser(Auth.access_token);
 
         this.binding.custWelcomeLabel.text = "Bienvenido ${mainViewModel.currentUser.value?.username} ¿Que pedirás hoy?"
 
@@ -75,6 +76,12 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
 
         mainViewModel.currentUser.observe(viewLifecycleOwner) {
             Auth.currentUser = it;
+        }
+
+        mainViewModel.ordersList.observe(viewLifecycleOwner) {
+            binding.rvPedidos.adapter.apply {
+                (this as OrderAdapter).updateData(it)
+            }
         }
     }
 

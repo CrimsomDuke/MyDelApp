@@ -69,10 +69,30 @@ interface APIDeliveryService {
     * ORDERS MODULE
      */
 
+    @GET("orders")
+    fun getOrdersOfUser(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+    ) : Call<List<Order>>
+
+    @GET("orders/{id}")
+    fun getOrderById(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+        @Path("id") id : Int
+    ) : Call<Order>
+
     @GET("orders/free")
     fun getFreeOrders(
         @Header("Accept") accept : String = "application/json",
         @Header("Authorization") token : String,
     ) : Call<List<Order>>
+
+    @POST("orders")
+    fun createOrder(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+        @Body order : Order
+    ) : Call<Order>
 
 }

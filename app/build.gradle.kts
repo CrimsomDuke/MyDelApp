@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.play.services.auth)
     implementation(libs.cronet.embedded)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

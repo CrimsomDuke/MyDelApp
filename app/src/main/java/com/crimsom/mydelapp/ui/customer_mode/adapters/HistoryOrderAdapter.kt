@@ -23,6 +23,11 @@ class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<Hi
         return orderList.size
     }
 
+    public fun updateData(newData : List<Order>){
+        orderList = newData;
+        notifyDataSetChanged();
+    }
+
     class HistoryOrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private lateinit var binding : CustOrderListItemBinding;
@@ -36,21 +41,21 @@ class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<Hi
             //I must add the else stmt, because without it the color changes in the slide
             if(order.status == 3){
                 binding.apply {
-                    custOrdRestaurantLabel.setTextColor(Color.BLACK)
+                    custOrdStatusDescLabel.setTextColor(Color.BLACK)
                     custOrdAddressLabel.setTextColor(Color.BLACK)
                     custOrdDriverLabel.setTextColor(Color.BLACK)
                 }
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape_white)
             }else{
                 binding.apply {
-                    custOrdRestaurantLabel.setTextColor(Color.WHITE)
+                    custOrdStatusDescLabel.setTextColor(Color.WHITE)
                     custOrdAddressLabel.setTextColor(Color.WHITE)
                     custOrdDriverLabel.setTextColor(Color.WHITE)
                 }
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape)
             }
 
-            binding.custOrdRestaurantLabel.text = order.restaurantId.toString()
+            binding.custOrdStatusDescLabel.text = order.restaurantId.toString()
             binding.custOrdAddressLabel.text = order.address;
             binding.custOrdDriverLabel.text = order.driverId.toString();
 

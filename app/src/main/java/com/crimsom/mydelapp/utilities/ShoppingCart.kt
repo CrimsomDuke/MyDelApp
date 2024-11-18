@@ -3,6 +3,7 @@ package com.crimsom.mydelapp.utilities
 import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.models.OrderDetail
 import com.crimsom.mydelapp.models.Product
+import com.crimsom.mydelapp.models.aux_models.OrderDetailOnSending
 
 object ShoppingCart  {
 
@@ -45,12 +46,13 @@ object ShoppingCart  {
         return total;
     }
 
-    private fun getOrderDetailsFromCart(): List<OrderDetail>{
-        var orderDetails = mutableListOf<OrderDetail>();
+    //aux model type for sending data
+    private fun getOrderDetailsFromCart(): List<OrderDetailOnSending>{
+        var orderDetails = ArrayList<OrderDetailOnSending>();
         items.distinct().forEach {
-            orderDetails.add(OrderDetail(0, getProductCount(it), it.price.toDouble(), it));
+            orderDetails.add(OrderDetailOnSending(0, getProductCount(it), it.price.toDouble(), it));
         }
-        return orderDetails;
+        return orderDetails.toList();
     }
 
     class ProductInCartViewModel(var product: Product, var quantity: Int){
@@ -70,7 +72,7 @@ object ShoppingCart  {
             status = 1
         );
 
-        order.orderDetails = getOrderDetailsFromCart();
+        order.orderDetailsOnSending = getOrderDetailsFromCart();
 
         return order;
     }

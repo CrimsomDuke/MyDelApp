@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="vertical"
+    android:padding="15dp"
+    tools:context=".ui.customer_mode.fragments.sub_fragments.CustomerCurrentOrderStatusFragment">
+
+    <LinearLayout
+        android:id="@+id/cust_ord_confirmOrderLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/cust_ord_confirmLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="¿Confirmar Pedido?"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/cust_ord_confirmOrderButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Confirmar" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/cust_ord_orderStatusLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/cust_ord_orderStatusLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Estado: "
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/cust_ord_goToOrderDetailsButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Ver detalles" />
+    </LinearLayout>
+
+</LinearLayout>

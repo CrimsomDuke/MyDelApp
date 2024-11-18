@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentShoppingCartBinding
@@ -47,7 +48,7 @@ class ShoppingCartFragment : Fragment() {
 
         binding.custConfirmOrderButton.setOnClickListener {
             //redirect to order confirmation fragment
-
+            findNavController().navigate(R.id.action_shoppingCartFragment_to_customerFullOrderMapFragment)
         }
     }
 

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.CustOrderListItemBinding
 import com.crimsom.mydelapp.models.Order
+import com.crimsom.mydelapp.utilities.Auth
 
 class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -22,6 +23,11 @@ class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAda
         return ordersList.size
     }
 
+    public fun updateData(newData: List<Order>){
+        ordersList = newData;
+        notifyDataSetChanged();
+    }
+
     class OrderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private lateinit var binding : CustOrderListItemBinding;
 
@@ -33,23 +39,26 @@ class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAda
 
             if(order.status == 3){
                 binding.apply {
-                    custOrdRestaurantLabel.setTextColor(Color.BLACK)
+                    custOrdStatusDescLabel.setTextColor(Color.BLACK)
                     custOrdAddressLabel.setTextColor(Color.BLACK)
                     custOrdDriverLabel.setTextColor(Color.BLACK)
                 }
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape_white)
             }else{
                 binding.apply {
-                    custOrdRestaurantLabel.setTextColor(Color.WHITE)
+                    custOrdStatusDescLabel.setTextColor(Color.WHITE)
                     custOrdAddressLabel.setTextColor(Color.WHITE)
                     custOrdDriverLabel.setTextColor(Color.WHITE)
                 }
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape)
             }
 
-            binding.custOrdRestaurantLabel.text = order.restaurantId.toString()
+            binding.custOrdStatusDescLabel.text = "Orden en: " + Auth.getOrderStatusDescription(order.status);
             binding.custOrdAddressLabel.text = order.address;
             binding.custOrdDriverLabel.text = order.driverId.toString();
+            if(order.driverId == null){
+                binding.custOrdDriverLabel.text = "Aun sin chofer"
+            }
 
         }
     }

@@ -1,5 +1,6 @@
 package com.crimsom.mydelapp.models
 
+import com.crimsom.mydelapp.models.aux_models.OrderDetailOnSending
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
@@ -18,4 +19,5 @@ data class Order(
     @SerializedName("delivery_proof") public var deliveryProofImg : String = "";
 
     @SerializedName("order_details") public var orderDetails : List<OrderDetail> = listOf()
+    @SerializedName("details") public var orderDetailsOnSending : List<OrderDetailOnSending> = listOf()
 }

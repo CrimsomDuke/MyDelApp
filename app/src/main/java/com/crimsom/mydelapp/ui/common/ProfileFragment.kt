@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentProfileBinding
 import com.crimsom.mydelapp.ui.common.viewmodels.ProfileViewModel
@@ -31,6 +30,7 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         profileViewModel.getCurrentUserFromAuth();
+        profileViewModel.getOrdersHistory(Auth.access_token);
 
         this.setupUserDetails();
         this.setupRecyclerView();
@@ -66,7 +66,7 @@ class ProfileFragment : Fragment() {
 
     private fun setupRecyclerView(){
         binding.rvOrderHistory.apply {
-            adapter = HistoryOrderAdapter(FakeDB.getOrdersByUserId(Auth.currentUserId))
+            adapter = HistoryOrderAdapter(profileViewModel.orders.value!!)
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
         }
     }
@@ -74,6 +74,10 @@ class ProfileFragment : Fragment() {
     private fun setupObservers(){
         profileViewModel.user.observe(viewLifecycleOwner) {
             this.setupUserDetails();
+        }
+
+        profileViewModel.orders.observe(viewLifecycleOwner) {
+            (binding.rvOrderHistory.adapter as HistoryOrderAdapter).updateData(it)
         }
     }
 

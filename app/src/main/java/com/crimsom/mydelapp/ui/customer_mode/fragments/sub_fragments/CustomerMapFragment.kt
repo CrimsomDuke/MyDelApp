@@ -1,37 +1,38 @@
-package com.crimsom.mydelapp.ui.driver_mode.fragments
-
-import androidx.fragment.app.Fragment
+package com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import androidx.fragment.app.Fragment
+
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.checkSelfPermission
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.MapUpdateListener
 import com.crimsom.mydelapp.databinding.FragmentDriverMapBinding
 import com.crimsom.mydelapp.utilities.Auth
-import com.crimsom.mydelapp.utilities.PermissionsUtil
-import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 
-class DriverMapFragment : Fragment(), OnMapReadyCallback {
+class CustomerMapFragment : Fragment(), OnMapReadyCallback, MapUpdateListener {
 
     private var mMap: GoogleMap? = null
     private lateinit var binding : FragmentDriverMapBinding;
 
-    private lateinit var originLocation : LatLng;
-    private lateinit var destinationLocation : LatLng;
+    private lateinit var fusedLocationClient: FusedLocationProviderClient;
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,25 +41,12 @@ class DriverMapFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         binding = FragmentDriverMapBinding.inflate(inflater, container, false)
 
-        if(Auth.driver_selectedCompleteOrderData.isComplete()){
-            originLocation = LatLng(
-                Auth.driver_selectedCompleteOrderData.restaurant!!.latitude.toDouble(),
-                Auth.driver_selectedCompleteOrderData.restaurant!!.longitude.toDouble()
-            )
-
-            destinationLocation = LatLng(
-                Auth.driver_selectedCompleteOrderData.order!!.latitude.toDouble(),
-                Auth.driver_selectedCompleteOrderData.order!!.longitude.toDouble()
-            )
-        }
-
-        println("Origin location: $originLocation")
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         val mapFragment = requireActivity().supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment?
 
         mapFragment?.getMapAsync(this)
-        PermissionsUtil.requestMapPermissions(this);
 
         return binding.root
     }
@@ -75,25 +63,7 @@ class DriverMapFragment : Fragment(), OnMapReadyCallback {
         mMap?.uiSettings?.isZoomControlsEnabled = true
         mMap?.uiSettings?.isCompassEnabled = true
 
-        mMap?.addMarker(
-            MarkerOptions().position(
-                originLocation
-            ).title(Auth.driver_selectedCompleteOrderData.restaurant!!.name)
-        )
-
-        mMap?.addMarker(
-            MarkerOptions().position(
-                destinationLocation
-            ).title("Destino")
-        )
-
-        mMap?.animateCamera(
-            CameraUpdateFactory.newLatLngZoom(
-                originLocation,
-                15f
-            )
-        )
-        enableLocationOnMap()
+        enableLocationOnMap();
     }
 
     override fun onRequestPermissionsResult(
@@ -103,6 +73,8 @@ class DriverMapFragment : Fragment(), OnMapReadyCallback {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+            //Enable location on the fucking map
             enableLocationOnMap()
         } else {
             Toast.makeText(
@@ -120,6 +92,41 @@ class DriverMapFragment : Fragment(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     private fun enableLocationOnMap() {
         mMap?.isMyLocationEnabled = true
+
+        fusedLocationClient.lastLocation.addOnSuccessListener {
+            location ->
+            if (location != null) {
+                val currentLatLng = LatLng(location.latitude, location.longitude)
+
+                //asignar las coordenadas del usuario
+                Auth.currentUserLatitude = location.latitude.toString();
+                Auth.currentUserLongitude = location.longitude.toString();
+
+                println("Las coordenas son: " + Auth.currentUserLatitude + " - " + Auth.currentUserLongitude);
+
+                mMap?.animateCamera(
+                    CameraUpdateFactory.newLatLngZoom(
+                        currentLatLng,
+                        15f
+                    )
+                )
+            }
+        }
+
     }
 
+    override fun addMarker(location: LatLng, title: String) {
+        mMap?.addMarker(
+            MarkerOptions().position(
+                location
+            ).title(title)
+        );
+
+        mMap?.animateCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                location,
+                15f
+            )
+        )
+    }
 }
