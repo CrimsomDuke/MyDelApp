@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.OnCurrentOrderItemListener
 import com.crimsom.mydelapp.databinding.CustOrderListItemBinding
 import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.utilities.Auth
 
-class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
+class OrderAdapter(var ordersList : List<Order>, var onCurrentOrderItemListener: OnCurrentOrderItemListener) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
         return return OrderViewHolder(CustOrderListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).root)
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {
-        holder.bind(ordersList[position])
+        holder.bind(ordersList[position], onCurrentOrderItemListener);
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +36,7 @@ class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAda
             binding = CustOrderListItemBinding.bind(itemView)
         }
 
-        public fun bind(order: Order){
+        public fun bind(order: Order, onCurrentOrderItemListener: OnCurrentOrderItemListener){
 
             if(order.status == 3){
                 binding.apply {
@@ -58,6 +59,11 @@ class OrderAdapter(var ordersList : List<Order>) : RecyclerView.Adapter<OrderAda
             binding.custOrdDriverLabel.text = order.driverId.toString();
             if(order.driverId == null){
                 binding.custOrdDriverLabel.text = "Aun sin chofer"
+            }
+
+            //action
+            binding.root.setOnClickListener {
+                onCurrentOrderItemListener.onCurrentOrderItemClick(order.id);
             }
 
         }

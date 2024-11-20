@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.FakeDB
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.OnCurrentOrderItemListener
 import com.crimsom.mydelapp.aux_interfaces.OnRestaurantClickListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerMainBinding
 import com.crimsom.mydelapp.ui.customer_mode.adapters.OrderAdapter
@@ -17,7 +18,7 @@ import com.crimsom.mydelapp.ui.customer_mode.viewmodels.MainCustomerViewModel
 import com.crimsom.mydelapp.utilities.Auth
 import com.crimsom.mydelapp.utilities.ShoppingCart
 
-class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
+class CustomerMainFragment : Fragment(), OnRestaurantClickListener, OnCurrentOrderItemListener {
 
     private lateinit var binding : FragmentCustomerMainBinding;
 
@@ -53,7 +54,7 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
         }
 
         binding.rvPedidos.apply {
-            adapter = OrderAdapter(FakeDB.getOrdersByUserId(Auth.currentUserId))
+            adapter = OrderAdapter(mainViewModel.ordersList.value!!, this@CustomerMainFragment)
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
             }
@@ -93,6 +94,13 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener {
     private fun clearData(){
         Auth.cust_selectedRestaurantId = 0;
         ShoppingCart.reset();
+    }
+
+    override fun onCurrentOrderItemClick(orderId: Int) {
+        val navController = findNavController()
+        var bundle = Bundle()
+        bundle.putInt("orderId", orderId)
+        navController.navigate(R.id.action_customerTabFragment_to_customerFullOrderMapFragment, bundle)
     }
 
 }

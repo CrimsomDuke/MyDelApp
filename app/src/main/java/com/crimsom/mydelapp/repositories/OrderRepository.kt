@@ -2,6 +2,7 @@ package com.crimsom.mydelapp.repositories
 
 import com.crimsom.mydelapp.api.APIDeliveryService
 import com.crimsom.mydelapp.models.Order
+import com.crimsom.mydelapp.models.aux_models.CompleteOrderData
 import com.crimsom.mydelapp.utilities.HttpLogger
 import retrofit2.Call
 import retrofit2.Callback

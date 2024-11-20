@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.crimsom.mydelapp.aux_interfaces.OnOrderConfirmationListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerCurrentOrderStatusBinding
+import com.crimsom.mydelapp.utilities.Auth
 
 class CustomerCurrentOrderStatusFragment : Fragment() {
 
@@ -38,5 +39,11 @@ class CustomerCurrentOrderStatusFragment : Fragment() {
     //to call in upper fragment
     public fun setOnOrderConfirmationListener(listener : OnOrderConfirmationListener){
         this.OnOrderConfirmationListener = listener;
+    }
+
+    public fun setOrderStatus(status : Int){
+        binding.custOrdConfirmOrderLayout.visibility = View.GONE;
+        binding.custOrdOrderStatusLayout.visibility = View.VISIBLE;
+        binding.custOrdOrderStatusLabel.text = Auth.getOrderStatusDescription(status);
     }
 }

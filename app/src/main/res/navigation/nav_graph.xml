@@ -45,9 +45,8 @@
             app:destination="@id/customerRestaurantFragment"
             app:enterAnim="@android:anim/slide_in_left" />
         <action
-            android:id="@+id/action_customerTabFragment_to_customerFullOrderMapFragment2"
-            app:destination="@id/customerFullOrderMapFragment2"
-            app:enterAnim="@android:anim/slide_in_left" />
+            android:id="@+id/action_customerTabFragment_to_customerFullOrderMapFragment"
+            app:destination="@id/customerFullOrderMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/customerRestaurantFragment"
@@ -94,16 +93,11 @@
         android:id="@+id/customerFullOrderMapFragment"
         android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerFullOrderMapFragment"
         android:label="fragment_customer_full_order_map"
-        tools:layout="@layout/fragment_customer_full_order_map" />
-
-    <fragment
-        android:id="@+id/customerFullOrderMapFragment2"
-        android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerFullOrderMapFragment"
-        android:label="fragment_customer_full_order_map"
         tools:layout="@layout/fragment_customer_full_order_map" >
-        <argument
-            android:name="order_id"
-            app:argType="integer"
-            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_customerFullOrderMapFragment_self"
+            app:destination="@id/customerFullOrderMapFragment"
+            app:enterAnim="@anim/nav_default_pop_enter_anim" />
     </fragment>
+
 </navigation>

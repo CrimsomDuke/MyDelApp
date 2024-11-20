@@ -16,6 +16,7 @@ import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.MapUpdateListener
 import com.crimsom.mydelapp.databinding.FragmentDriverMapBinding
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.PermissionsUtil
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 
@@ -47,6 +48,7 @@ class CustomerMapFragment : Fragment(), OnMapReadyCallback, MapUpdateListener {
             .findFragmentById(R.id.map) as SupportMapFragment?
 
         mapFragment?.getMapAsync(this)
+        PermissionsUtil.requestMapPermissions(this);
 
         return binding.root
     }
@@ -113,6 +115,21 @@ class CustomerMapFragment : Fragment(), OnMapReadyCallback, MapUpdateListener {
             }
         }
 
+    }
+
+    public fun setupOriginAndDestinyMarkers(origin : LatLng, originTitle : String, destiny : LatLng, destinyTitle : String){
+        mMap?.clear();
+        mMap?.addMarker(
+            MarkerOptions().position(
+                origin
+            ).title(originTitle)
+        );
+
+        mMap?.addMarker(
+            MarkerOptions().position(
+                destiny
+            ).title(destinyTitle)
+        );
     }
 
     override fun addMarker(location: LatLng, title: String) {
