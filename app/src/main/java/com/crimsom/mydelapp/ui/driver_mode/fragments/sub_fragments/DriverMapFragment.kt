@@ -1,4 +1,4 @@
-package com.crimsom.mydelapp.ui.driver_mode.fragments
+package com.crimsom.mydelapp.ui.driver_mode.fragments.sub_fragments
 
 import androidx.fragment.app.Fragment
 
@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.checkSelfPermission
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentDriverMapBinding
 import com.crimsom.mydelapp.utilities.Auth
