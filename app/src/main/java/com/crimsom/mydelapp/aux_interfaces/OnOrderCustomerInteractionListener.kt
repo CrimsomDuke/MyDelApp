@@ -1,5 +1,5 @@
 package com.crimsom.mydelapp.aux_interfaces
 
-interface OnOrderConfirmationListener {
+interface OnOrderCustomerInteractionListener {
     public fun onOrderConfirmation();
 }

@@ -5,7 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.crimsom.mydelapp.aux_interfaces.OnOrderConfirmationListener
+import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerInteractionListener
+import com.crimsom.mydelapp.aux_interfaces.OnOrderDetailsListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerCurrentOrderStatusBinding
 import com.crimsom.mydelapp.utilities.Auth
 
@@ -13,7 +14,8 @@ class CustomerCurrentOrderStatusFragment : Fragment() {
 
     private lateinit var binding: FragmentCustomerCurrentOrderStatusBinding;
 
-    private lateinit var OnOrderConfirmationListener : OnOrderConfirmationListener;
+    private lateinit var onOrderCustomerInteractionListener : OnOrderCustomerInteractionListener;
+    private lateinit var onOrderDetailListener: OnOrderDetailsListener;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,24 +28,35 @@ class CustomerCurrentOrderStatusFragment : Fragment() {
         binding = FragmentCustomerCurrentOrderStatusBinding.inflate(inflater, container, false)
 
         this.setupConfirmOrderLayout();
+        this.setupButtonsActions();
 
         return binding.root
     }
 
     private fun setupConfirmOrderLayout(){
         binding.custOrdConfirmOrderButton.setOnClickListener {
-            OnOrderConfirmationListener.onOrderConfirmation();
+            onOrderCustomerInteractionListener.onOrderConfirmation();
         }
     }
 
     //to call in upper fragment
-    public fun setOnOrderConfirmationListener(listener : OnOrderConfirmationListener){
-        this.OnOrderConfirmationListener = listener;
+    public fun setOnOrderCustomerInteractionListener(listener : OnOrderCustomerInteractionListener){
+        this.onOrderCustomerInteractionListener = listener;
+    }
+
+    public fun setOnOrderDetailListener(listener : OnOrderDetailsListener){
+        this.onOrderDetailListener = listener;
     }
 
     public fun setOrderStatus(status : Int){
         binding.custOrdConfirmOrderLayout.visibility = View.GONE;
         binding.custOrdOrderStatusLayout.visibility = View.VISIBLE;
         binding.custOrdOrderStatusLabel.text = Auth.getOrderStatusDescription(status);
+    }
+
+    private fun setupButtonsActions(){
+        binding.custOrdGoToOrderDetailsButton.setOnClickListener {
+            onOrderDetailListener.onGoToOrderDetailsByAction();
+        }
     }
 }

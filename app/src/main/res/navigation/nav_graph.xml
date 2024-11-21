@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_customerTabFragment_to_customerFullOrderMapFragment"
             app:destination="@id/customerFullOrderMapFragment" />
+        <action
+            android:id="@+id/action_customerTabFragment_to_customerOrderDetailsFragment"
+            app:destination="@id/customerOrderDetailsFragmentHistory" />
     </fragment>
     <fragment
         android:id="@+id/customerRestaurantFragment"
@@ -109,6 +112,10 @@
         <action
             android:id="@+id/action_customerFullOrderMapFragment_to_orderCompletedFragment"
             app:destination="@id/orderCompletedFragmentCustomer" />
+        <action
+            android:id="@+id/action_customerFullOrderMapFragment_to_customerOrderDetailsFragmentFull"
+            app:destination="@id/customerOrderDetailsFragmentFull"
+            app:enterAnim="@anim/nav_default_enter_anim" />
     </fragment>
     <fragment
         android:id="@+id/orderCompletedFragmentCustomer"
@@ -120,5 +127,25 @@
         android:name="com.crimsom.mydelapp.ui.common.OrderCompletedFragment"
         android:label="fragment_order_completed"
         tools:layout="@layout/fragment_order_completed" />
+    <fragment
+        android:id="@+id/customerOrderDetailsFragmentHistory"
+        android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerOrderDetailsFragment"
+        android:label="fragment_customer_order_details"
+        tools:layout="@layout/fragment_customer_order_details" >
+        <argument
+            android:name="orderId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/customerOrderDetailsFragmentFull"
+        android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerOrderDetailsFragment"
+        android:label="fragment_customer_order_details"
+        tools:layout="@layout/fragment_customer_order_details" >
+        <argument
+            android:name="orderId"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 
 </navigation>

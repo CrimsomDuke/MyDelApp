@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.crimsom.mydelapp.R
-import com.crimsom.mydelapp.aux_interfaces.OnOrderConfirmationListener
+import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerInteractionListener
+import com.crimsom.mydelapp.aux_interfaces.OnOrderDetailsListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerFullOrderMapBinding
 import com.crimsom.mydelapp.repositories.OrderRepository
 import com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerCurrentOrderStatusFragment
@@ -19,13 +20,13 @@ import com.crimsom.mydelapp.utilities.ShoppingCart
 import com.google.android.gms.maps.model.LatLng
 
 
-class CustomerFullOrderMapFragment : Fragment(), OnOrderConfirmationListener {
+class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListener , OnOrderDetailsListener{
 
 
     private lateinit var binding : FragmentCustomerFullOrderMapBinding;
     private var viewModel = FullOrderMapViewModel();
 
-    private var orderId : Int = 0;
+    public var orderId : Int = 0;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,12 +54,17 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderConfirmationListener {
     }
 
     private fun setupFragmentsActions(){
+
+        val customerCurrentOrderStatusFragment = (binding.fragmentContainerCustOrderStatus.getFragment<CustomerCurrentOrderStatusFragment>())
+
+        //set a listener
+        customerCurrentOrderStatusFragment.setOnOrderDetailListener(this)
         //set up the current order status fragment actions
         if(orderId != 0){
             return;
         }
-        val customerCurrentOrderStatusFragment = (binding.fragmentContainerCustOrderStatus.getFragment<CustomerCurrentOrderStatusFragment>())
-        customerCurrentOrderStatusFragment.setOnOrderConfirmationListener(this)
+        //set the listeners
+        customerCurrentOrderStatusFragment.setOnOrderCustomerInteractionListener(this)
     }
 
     override fun onOrderConfirmation() {
@@ -128,5 +134,15 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderConfirmationListener {
             Log.i("ORDER_DATA_IN_MAP", "Restaurant data: $it")
             loadOrderDataIntoSubFragments()
         }
+    }
+
+    override fun onGoToOrderDetailsByAction() {
+        var bundle = Bundle()
+        bundle.putInt("orderId", orderId)
+        findNavController().navigate(R.id.action_customerFullOrderMapFragment_to_customerOrderDetailsFragmentFull, bundle)
+    }
+
+    override fun onGoToOrderDetailsById(orderId: Int) {
+        println("No va a hacer nada xd")
     }
 }

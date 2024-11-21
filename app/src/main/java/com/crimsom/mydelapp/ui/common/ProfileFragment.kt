@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.OnOrderDetailsListener
 import com.crimsom.mydelapp.databinding.FragmentProfileBinding
 import com.crimsom.mydelapp.ui.common.viewmodels.ProfileViewModel
 import com.crimsom.mydelapp.ui.customer_mode.adapters.HistoryOrderAdapter
 import com.crimsom.mydelapp.utilities.Auth
 
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), OnOrderDetailsListener {
 
     private lateinit var binding : FragmentProfileBinding;
     private var profileViewModel = ProfileViewModel();
@@ -66,7 +67,7 @@ class ProfileFragment : Fragment() {
 
     private fun setupRecyclerView(){
         binding.rvOrderHistory.apply {
-            adapter = HistoryOrderAdapter(profileViewModel.orders.value!!)
+            adapter = HistoryOrderAdapter(profileViewModel.orders.value!!, this@ProfileFragment)
             layoutManager = LinearLayoutManager(context).apply { orientation = LinearLayoutManager.VERTICAL }
         }
     }
@@ -84,5 +85,15 @@ class ProfileFragment : Fragment() {
     private fun logout(){
         Auth.clearUserSession();
         findNavController().navigate(R.id.action_logout);
+    }
+
+    override fun onGoToOrderDetailsByAction() {
+        println("Aca este papou no hace nada")
+    }
+
+    override fun onGoToOrderDetailsById(orderId: Int) {
+        val bundle = Bundle()
+        bundle.putInt("orderId", orderId)
+        findNavController().navigate(R.id.action_customerTabFragment_to_customerOrderDetailsFragment, bundle)
     }
 }

@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerInteractionListener
+import com.crimsom.mydelapp.aux_interfaces.OnOrderDetailsListener
 import com.crimsom.mydelapp.databinding.CustOrderListItemBinding
 import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.utilities.Auth
 import com.crimsom.mydelapp.utilities.Constants
 
-class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<HistoryOrderAdapter.HistoryOrderViewHolder>(){
+class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListener: OnOrderDetailsListener) :
+    RecyclerView.Adapter<HistoryOrderAdapter.HistoryOrderViewHolder>()
+{
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryOrderViewHolder {
         return HistoryOrderViewHolder(CustOrderListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).root)
@@ -65,5 +69,4 @@ class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<Hi
             binding.custOrdDateLabel.text = order.createdAt.toString();
         }
     }
-
 }
