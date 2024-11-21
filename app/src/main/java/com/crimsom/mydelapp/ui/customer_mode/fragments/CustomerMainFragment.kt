@@ -16,6 +16,7 @@ import com.crimsom.mydelapp.ui.customer_mode.adapters.OrderAdapter
 import com.crimsom.mydelapp.ui.customer_mode.adapters.RestaurantAdapter
 import com.crimsom.mydelapp.ui.customer_mode.viewmodels.MainCustomerViewModel
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.Constants
 import com.crimsom.mydelapp.utilities.ShoppingCart
 
 class CustomerMainFragment : Fragment(), OnRestaurantClickListener, OnCurrentOrderItemListener {
@@ -54,7 +55,11 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener, OnCurrentOrd
         }
 
         binding.rvPedidos.apply {
-            adapter = OrderAdapter(mainViewModel.ordersList.value!!, this@CustomerMainFragment)
+            //We only wan the orders that are not delivered here
+            adapter = OrderAdapter(
+                mainViewModel.ordersList.value!!,
+                this@CustomerMainFragment
+            )
             layoutManager = LinearLayoutManager(context).apply {
                 orientation = LinearLayoutManager.HORIZONTAL
             }

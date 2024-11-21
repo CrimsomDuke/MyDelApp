@@ -88,7 +88,15 @@
         android:id="@+id/driverFullOrderFragment"
         android:name="com.crimsom.mydelapp.ui.driver_mode.fragments.DriverFullOrderFragment"
         android:label="fragment_driver_full_order"
-        tools:layout="@layout/fragment_driver_full_order" />
+        tools:layout="@layout/fragment_driver_full_order" >
+        <argument
+            android:name="orderId"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_driverFullOrderFragment_to_orderCompletedFragment3"
+            app:destination="@id/orderCompletedFragmentDriver" />
+    </fragment>
     <fragment
         android:id="@+id/customerFullOrderMapFragment"
         android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.CustomerFullOrderMapFragment"
@@ -98,6 +106,19 @@
             android:id="@+id/action_customerFullOrderMapFragment_self"
             app:destination="@id/customerFullOrderMapFragment"
             app:enterAnim="@anim/nav_default_pop_enter_anim" />
+        <action
+            android:id="@+id/action_customerFullOrderMapFragment_to_orderCompletedFragment"
+            app:destination="@id/orderCompletedFragmentCustomer" />
     </fragment>
+    <fragment
+        android:id="@+id/orderCompletedFragmentCustomer"
+        android:name="com.crimsom.mydelapp.ui.common.OrderCompletedFragment"
+        android:label="fragment_order_completed"
+        tools:layout="@layout/fragment_order_completed" />
+    <fragment
+        android:id="@+id/orderCompletedFragmentDriver"
+        android:name="com.crimsom.mydelapp.ui.common.OrderCompletedFragment"
+        android:label="fragment_order_completed"
+        tools:layout="@layout/fragment_order_completed" />
 
 </navigation>

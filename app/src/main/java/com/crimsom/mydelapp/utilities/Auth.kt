@@ -39,13 +39,13 @@ object Auth {
     }
 
     public fun getOrderStatusDescription(orderId : Int) : String{
-        if(orderId == 1 || orderId == null) {
+        if(orderId == Constants.ORDER_STATUS_REQUESTED || orderId == null) {
             return "Solicitado"
-        }else if(orderId == 2){
+        }else if(orderId == Constants.ORDER_STATUS_ACCEPTED){
             return "Aceptado"
-        }else if(orderId == 3) {
+        }else if(orderId == Constants.ORDER_STATUS_ON_WAY) {
             return "En camino"
-        }else if(orderId == 4){
+        }else if(orderId == Constants.ORDER_STATUS_DELIVERED){
             return "Entregado"
         }
 

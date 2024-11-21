@@ -70,19 +70,11 @@ class DriverMainFragment : Fragment(), OnUntakenOrderClickListener {
     }
 
     override fun onUntakenOrderClick(order: Order) {
-        var progressDialog = startLoadingDialog();
 
-        RestaurantRepository.getRestaurantById(Auth.access_token, order.restaurantId, onSuccess = {
-            progressDialog.dismiss()
+        var bundle = Bundle();
+        bundle.putInt("orderId", order.id);
+        findNavController().navigate(R.id.action_driverTabFragment_to_driverFullOrderFragment, bundle);
 
-            Auth.driver_selectedCompleteOrderData.order = order
-            Auth.driver_selectedCompleteOrderData.restaurant = it
-
-            findNavController().navigate(R.id.action_driverTabFragment_to_driverFullOrderFragment)
-        }, onError = {
-            Toast.makeText(requireContext(), "Error al obtener la información de la orden", Toast.LENGTH_SHORT).show()
-            progressDialog.dismiss()
-        })
     }
 
     private fun startLoadingDialog() : ProgressDialog {

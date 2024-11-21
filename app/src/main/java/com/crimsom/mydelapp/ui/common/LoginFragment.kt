@@ -13,6 +13,7 @@ import com.crimsom.mydelapp.databinding.FragmentLoginBinding
 import com.crimsom.mydelapp.models.aux_models.LoginRequest
 import com.crimsom.mydelapp.repositories.UserRepository
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.ProgressDialogBuilder
 import com.techiness.progressdialoglibrary.ProgressDialog
 
 class LoginFragment : Fragment() {
@@ -56,7 +57,8 @@ class LoginFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            var progressDialog = startLoadingDialog();
+            var progressDialog = ProgressDialogBuilder.startLoadingDialog(requireContext(),
+                "Iniciando sesión...", "Espera un momento por favor");
 
             var loginRequest = LoginRequest(email, password)
             UserRepository.login(loginRequest, onSuccess = {
@@ -106,21 +108,5 @@ class LoginFragment : Fragment() {
     private fun goToDriverMode(){
         var navController = findNavController()
         navController.navigate(R.id.action_loginFragment_to_driverTabFragment);
-    }
-
-    private fun startLoadingDialog() : ProgressDialog{
-        var progressDialog = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            ProgressDialog(requireContext(), ProgressDialog.THEME_FOLLOW_SYSTEM)
-        } else {
-            ProgressDialog(requireContext())
-        }
-
-        with(progressDialog){
-            setMessage("Espere un momento...")
-            setTitle("Iniciando sesión")
-            show()
-        }
-
-        return progressDialog;
     }
 }

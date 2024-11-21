@@ -116,4 +116,89 @@ object OrderRepository {
         })
     }
 
+    /**
+     * DRIVERS ENDPOINTS
+     * */
+
+    fun acceptOrder(
+        accessToken: String,
+        orderId: Int,
+        onSuccess: (Order) -> Unit,
+        onError: (Throwable) -> Unit
+    ){
+        val retrofit = RetrofitRepository.getRetrofitInstance();
+        val service = retrofit.create(APIDeliveryService::class.java);
+
+        service.acceptOrder(token = "Bearer $accessToken", id = orderId).enqueue(object : Callback<Order> {
+            override fun onResponse(call: Call<Order>, response: Response<Order>) {
+                if (response.isSuccessful) {
+                    val order = response.body()!!
+                    onSuccess(order)
+                } else {
+                    onError(Throwable("Error in the request: ${response.code()}"))
+                }
+
+                HttpLogger.logResponse(response)
+            }
+
+            override fun onFailure(call: Call<Order>, t: Throwable) {
+                onError(t) // Pass the error to the callback
+            }
+        })
+    }
+
+    fun onMyWayOrder(
+        accessToken: String,
+        orderId: Int,
+        onSuccess: (Order) -> Unit,
+        onError: (Throwable) -> Unit
+    ){
+        val retrofit = RetrofitRepository.getRetrofitInstance();
+        val service = retrofit.create(APIDeliveryService::class.java);
+
+        service.onMyWayOrder(token = "Bearer $accessToken", id = orderId).enqueue(object : Callback<Order> {
+            override fun onResponse(call: Call<Order>, response: Response<Order>) {
+                if (response.isSuccessful) {
+                    val order = response.body()!!
+                    onSuccess(order)
+                } else {
+                    onError(Throwable("Error in the request: ${response.code()}"))
+                }
+
+                HttpLogger.logResponse(response)
+            }
+
+            override fun onFailure(call: Call<Order>, t: Throwable) {
+                onError(t) // Pass the error to the callback
+            }
+        })
+    }
+
+    fun deliveredOrder(
+        accessToken: String,
+        orderId: Int,
+        onSuccess: (Order) -> Unit,
+        onError: (Throwable) -> Unit
+    ){
+        val retrofit = RetrofitRepository.getRetrofitInstance();
+        val service = retrofit.create(APIDeliveryService::class.java);
+
+        service.deliveredOrder(token = "Bearer $accessToken", id = orderId).enqueue(object : Callback<Order> {
+            override fun onResponse(call: Call<Order>, response: Response<Order>) {
+                if (response.isSuccessful) {
+                    val order = response.body()!!
+                    onSuccess(order)
+                } else {
+                    onError(Throwable("Error in the request: ${response.code()}"))
+                }
+
+                HttpLogger.logResponse(response)
+            }
+
+            override fun onFailure(call: Call<Order>, t: Throwable) {
+                onError(t) // Pass the error to the callback
+            }
+        })
+    }
+
 }

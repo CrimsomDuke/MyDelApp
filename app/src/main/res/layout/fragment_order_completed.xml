@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.common.OrderCompletedFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/finishedLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="442dp"
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        android:text="La orden fue completada. Muchas gracias."
+        android:textSize="34sp" />
+
+    <Button
+        android:id="@+id/finishedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        android:text="Seguir pidiendo" />
+
+</LinearLayout>

@@ -95,4 +95,25 @@ interface APIDeliveryService {
         @Body order : Order
     ) : Call<Order>
 
+    @POST("orders/{id}/accept")
+    fun acceptOrder(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+        @Path("id") id : Int
+    ) : Call<Order>
+
+    @POST("orders/{id}/omw")
+    fun onMyWayOrder(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+        @Path("id") id : Int
+    ) : Call<Order>
+
+    @POST("orders/{id}/delivered")
+    fun deliveredOrder(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+        @Path("id") id : Int
+    ) : Call<Order>
+
 }

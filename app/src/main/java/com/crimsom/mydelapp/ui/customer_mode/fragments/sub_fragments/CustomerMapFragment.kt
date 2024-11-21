@@ -117,7 +117,7 @@ class CustomerMapFragment : Fragment(), OnMapReadyCallback, MapUpdateListener {
 
     }
 
-    public fun setupOriginAndDestinyMarkers(origin : LatLng, originTitle : String, destiny : LatLng, destinyTitle : String){
+    override fun setupOriginAndDestinyMarkers(origin : LatLng, originTitle : String, destiny : LatLng, destinyTitle : String){
         mMap?.clear();
         mMap?.addMarker(
             MarkerOptions().position(
@@ -130,6 +130,10 @@ class CustomerMapFragment : Fragment(), OnMapReadyCallback, MapUpdateListener {
                 destiny
             ).title(destinyTitle)
         );
+    }
+
+    override fun cleanMarkers() {
+        mMap?.clear();
     }
 
     override fun addMarker(location: LatLng, title: String) {

@@ -1,14 +1,13 @@
 package com.crimsom.mydelapp.utilities
 
 import com.crimsom.mydelapp.models.Order
-import com.crimsom.mydelapp.models.OrderDetail
 import com.crimsom.mydelapp.models.Product
 import com.crimsom.mydelapp.models.aux_models.OrderDetailOnSending
 
 object ShoppingCart  {
 
-    private lateinit var instance : ShoppingCart;
     private var items = mutableListOf<Product>();
+    public var orderAddress : String = "Vacio";
 
     fun addProduct(product: Product){
         items.add(product);
@@ -24,6 +23,7 @@ object ShoppingCart  {
 
     fun reset(){
         items.clear();
+        orderAddress = "Vacio";
     }
 
     fun getProductCount(product: Product): Int{

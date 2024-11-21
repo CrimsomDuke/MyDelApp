@@ -15,7 +15,7 @@ data class Order(
     @SerializedName("status") var status : Int
 ) {
     @SerializedName("created_at") public var createdAt : Date = Date()
-    @SerializedName("address") public var address : String = "Test temporal"
+    @SerializedName("address") public var address : String = "Vacio"
     @SerializedName("delivery_proof") public var deliveryProofImg : String = "";
 
     @SerializedName("order_details") public var orderDetails : List<OrderDetail> = listOf()

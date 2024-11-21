@@ -8,15 +8,16 @@
     tools:context=".ui.driver_mode.fragments.DriverFullOrderFragment">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView2"
+        android:id="@+id/driverMapFragmentContainer"
         android:name="com.crimsom.mydelapp.ui.driver_mode.fragments.sub_fragments.DriverMapFragment"
         android:layout_width="match_parent"
         android:layout_height="600dp" />
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView3"
-        android:name="com.crimsom.mydelapp.ui.common.ProfileFragment"
+        android:id="@+id/driverStatusFragmentContainer"
+        android:name="com.crimsom.mydelapp.ui.driver_mode.fragments.sub_fragments.DriverStatusFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:layout="@layout/fragment_driver_status" />
 
 </LinearLayout>

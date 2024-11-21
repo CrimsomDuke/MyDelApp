@@ -6,15 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.replace
 import androidx.navigation.fragment.findNavController
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.OnOrderConfirmationListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerFullOrderMapBinding
 import com.crimsom.mydelapp.repositories.OrderRepository
-import com.crimsom.mydelapp.repositories.RestaurantRepository
-import com.crimsom.mydelapp.ui.common.viewmodels.ProfileViewModel
 import com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerCurrentOrderStatusFragment
 import com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerMapFragment
 import com.crimsom.mydelapp.ui.customer_mode.viewmodels.FullOrderMapViewModel
@@ -68,6 +64,7 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderConfirmationListener {
     override fun onOrderConfirmation() {
 
         var myOrder = ShoppingCart.createOrderFromCart(Auth.currentUserId, Auth.cust_selectedRestaurantId, "Pendiente", "Pendiente")
+        myOrder.address = ShoppingCart.orderAddress; //We asign the address
 
         if(Auth.currentUserLatitude.isNotEmpty() && Auth.currentUserLongitude.isNotEmpty()){
             myOrder.latitude = Auth.currentUserLatitude
@@ -77,7 +74,11 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderConfirmationListener {
 
         OrderRepository.createOrder(Auth.access_token, myOrder, onSuccess = {
             Log.i("ORDER_DATA", "Order created: $it")
+
             myOrder = it;
+
+            //we kill the shopping cart
+            ShoppingCart.reset();
 
             //bundle the order id to the next fragment
             val bundle = Bundle()

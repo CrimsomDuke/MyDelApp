@@ -10,6 +10,7 @@ import com.crimsom.mydelapp.repositories.OrderRepository
 import com.crimsom.mydelapp.repositories.RestaurantRepository
 import com.crimsom.mydelapp.repositories.UserRepository
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.Constants
 
 class MainCustomerViewModel : ViewModel() {
     private val _restaurantsList = MutableLiveData<List<Restaurant>>().apply {
@@ -46,8 +47,9 @@ class MainCustomerViewModel : ViewModel() {
     }
 
     fun getOrderOfUser(token: String){
+        //Here we only want the orders that are not delivered
         OrderRepository.getOrdersOfUser(token, {
-            _ordersList.value = it;
+            _ordersList.value = it.filter { it.status != Constants.ORDER_STATUS_DELIVERED };
         }, {
             println(it.message)
         })

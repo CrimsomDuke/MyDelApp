@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.CustOrderListItemBinding
 import com.crimsom.mydelapp.models.Order
+import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.Constants
 
 class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<HistoryOrderAdapter.HistoryOrderViewHolder>(){
 
@@ -39,7 +41,7 @@ class HistoryOrderAdapter(var orderList : List<Order>) : RecyclerView.Adapter<Hi
         public fun bind(order: Order){
 
             //I must add the else stmt, because without it the color changes in the slide
-            if(order.status == 3){
+            if(order.status == Constants.ORDER_STATUS_DELIVERED){
                 binding.apply {
                     custOrdStatusDescLabel.setTextColor(Color.BLACK)
                     custOrdAddressLabel.setTextColor(Color.BLACK)

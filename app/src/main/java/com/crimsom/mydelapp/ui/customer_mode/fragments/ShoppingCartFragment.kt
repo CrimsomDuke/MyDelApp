@@ -48,6 +48,12 @@ class ShoppingCartFragment : Fragment() {
 
         binding.custConfirmOrderButton.setOnClickListener {
             //redirect to order confirmation fragment
+            if(binding.custScAddressField.text.toString().isEmpty()){
+                binding.custScAddressField.error = "Por favor, ingrese una dirección de entrega"
+                return@setOnClickListener
+            }
+
+            ShoppingCart.orderAddress = binding.custScAddressField.text.toString()
             findNavController().navigate(R.id.action_shoppingCartFragment_to_customerFullOrderMapFragment)
         }
     }
