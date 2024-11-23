@@ -1,7 +1,9 @@
 package com.crimsom.mydelapp.ui.driver_mode.fragments
 
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,25 +12,29 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.FakeDB
+import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.OnDriverLocationUpdateListener
 import com.crimsom.mydelapp.aux_interfaces.OnUntakenOrderClickListener
 import com.crimsom.mydelapp.databinding.FragmentDriverMainBinding
 import com.crimsom.mydelapp.models.Order
+import com.crimsom.mydelapp.models.aux_models.DriverLocation
+import com.crimsom.mydelapp.repositories.DriverRepository
 import com.crimsom.mydelapp.repositories.RestaurantRepository
+import com.crimsom.mydelapp.tasks.SendDriverLocationTask
 import com.crimsom.mydelapp.ui.driver_mode.adapters.UntakenOrderAdapter
 import com.crimsom.mydelapp.ui.driver_mode.viewmodels.DriverMainViewModel
 import com.crimsom.mydelapp.utilities.Auth
 import com.techiness.progressdialoglibrary.ProgressDialog
 
 
-class DriverMainFragment : Fragment(), OnUntakenOrderClickListener {
+class DriverMainFragment : Fragment(), OnUntakenOrderClickListener, OnDriverLocationUpdateListener {
 
     private lateinit var binding : FragmentDriverMainBinding;
     private val mainViewModel  = DriverMainViewModel();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -44,6 +50,19 @@ class DriverMainFragment : Fragment(), OnUntakenOrderClickListener {
         this.setupObservers()
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        if(Auth.IS_CURRENT_USER_DRIVER){
+            Log.i("DRIVER_LOCATION_UPDATES", "Starting driver location updates")
+            val driverLocationTask = SendDriverLocationTask.getInstance((activity as MainActivity));
+            driverLocationTask.setOnDriverLocationUpdateListener(this)
+
+            //we start the task specified in the MainActivity
+            (activity as MainActivity).startSendDriverLocationTask();
+        }
     }
 
     private fun setupRecyclerViews(){
@@ -77,19 +96,12 @@ class DriverMainFragment : Fragment(), OnUntakenOrderClickListener {
 
     }
 
-    private fun startLoadingDialog() : ProgressDialog {
-        var progressDialog = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            ProgressDialog(requireContext(), ProgressDialog.THEME_FOLLOW_SYSTEM)
-        } else {
-            ProgressDialog(requireContext())
-        }
-
-        with(progressDialog){
-            setMessage("Espere un momento...")
-            setTitle("Obteniendo información de la orden")
-            show()
-        }
-
-        return progressDialog;
+    override fun onDriverLocationUpdate(location: Location) {
+        DriverRepository.sendDriverLocation(Auth.access_token,
+            DriverLocation(location.latitude.toString(), location.longitude.toString()), onSuccess = {
+                Log.i("DRIVER_LOCATION_UPDATES", "Driver location sent")
+            }, onError = {
+                Log.e("DRIVER_LOCATION_UPDATES", "Error sending driver location")
+            })
     }
 }

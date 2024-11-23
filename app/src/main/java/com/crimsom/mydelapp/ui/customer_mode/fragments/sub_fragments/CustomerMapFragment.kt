@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.MapUpdateListener
 import com.crimsom.mydelapp.databinding.FragmentDriverMapBinding
@@ -48,7 +49,7 @@ class CustomerMapFragment : Fragment(), OnMapReadyCallback, MapUpdateListener {
             .findFragmentById(R.id.map) as SupportMapFragment?
 
         mapFragment?.getMapAsync(this)
-        PermissionsUtil.requestMapPermissions(this);
+        PermissionsUtil.requestMapPermissions(this, MainActivity.PERMISSION_REQUEST_CODE);
 
         return binding.root
     }

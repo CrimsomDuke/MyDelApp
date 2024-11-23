@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_customerTabFragment_to_customerOrderDetailsFragment"
             app:destination="@id/customerOrderDetailsFragmentHistory" />
+        <action
+            android:id="@+id/action_customerProfileFragment_to_customerFullOrderMapFragment"
+            app:destination="@id/customerFullOrderMapFragment" />
     </fragment>
     <fragment
         android:id="@+id/customerRestaurantFragment"
@@ -116,6 +119,10 @@
             android:id="@+id/action_customerFullOrderMapFragment_to_customerOrderDetailsFragmentFull"
             app:destination="@id/customerOrderDetailsFragmentFull"
             app:enterAnim="@anim/nav_default_enter_anim" />
+        <argument
+            android:name="orderId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/orderCompletedFragmentCustomer"

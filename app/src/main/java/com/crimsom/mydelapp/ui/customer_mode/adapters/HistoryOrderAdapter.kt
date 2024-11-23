@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.crimsom.mydelapp.R
+import com.crimsom.mydelapp.aux_interfaces.OnCurrentOrderItemListener
 import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerInteractionListener
 import com.crimsom.mydelapp.aux_interfaces.OnOrderDetailsListener
 import com.crimsom.mydelapp.databinding.CustOrderListItemBinding
@@ -13,7 +14,7 @@ import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.utilities.Auth
 import com.crimsom.mydelapp.utilities.Constants
 
-class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListener: OnOrderDetailsListener) :
+class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListener: OnOrderDetailsListener, var onCurrentOrderItemListener: OnCurrentOrderItemListener) :
     RecyclerView.Adapter<HistoryOrderAdapter.HistoryOrderViewHolder>()
 {
 
@@ -22,7 +23,7 @@ class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListene
     }
 
     override fun onBindViewHolder(holder: HistoryOrderViewHolder, position: Int) {
-        holder.bind(orderList[position])
+        holder.bind(orderList[position], onOrderDetailsListener, onCurrentOrderItemListener);
     }
 
     override fun getItemCount(): Int {
@@ -42,7 +43,7 @@ class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListene
             binding = CustOrderListItemBinding.bind(itemView)
         }
 
-        public fun bind(order: Order){
+        public fun bind(order: Order, onOrderDetailsListener: OnOrderDetailsListener, onCurrentOrderItemListener: OnCurrentOrderItemListener){
 
             //I must add the else stmt, because without it the color changes in the slide
             if(order.status == Constants.ORDER_STATUS_DELIVERED){
@@ -52,6 +53,11 @@ class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListene
                     custOrdDriverLabel.setTextColor(Color.BLACK)
                 }
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape_white)
+
+                //si la orden ya terminó, nos manda directamente a los detalles
+                binding.orderLayout.setOnClickListener {
+                    onOrderDetailsListener.onGoToOrderDetailsById(order.id);
+                }
             }else{
                 binding.apply {
                     custOrdStatusDescLabel.setTextColor(Color.WHITE)
@@ -59,6 +65,11 @@ class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListene
                     custOrdDriverLabel.setTextColor(Color.WHITE)
                 }
                 binding.orderLayout.setBackgroundResource(R.drawable.round_shape)
+
+                //si no termino, nos manda al mapa
+                binding.orderLayout.setOnClickListener {
+                    onCurrentOrderItemListener.onCurrentOrderItemClick(order.id);
+                }
             }
 
             binding.custOrdStatusDescLabel.text = order.restaurantId.toString()
@@ -66,7 +77,7 @@ class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListene
             binding.custOrdDriverLabel.text = order.driverId.toString();
 
             binding.custOrdDateLabel.visibility = View.VISIBLE;
-            binding.custOrdDateLabel.text = order.createdAt.toString();
+            binding.custOrdDateLabel.text = Constants.getFullDateInFormat(order.createdAt);
         }
     }
 }

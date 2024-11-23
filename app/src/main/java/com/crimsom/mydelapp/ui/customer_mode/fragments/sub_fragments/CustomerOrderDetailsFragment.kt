@@ -11,6 +11,8 @@ import com.crimsom.mydelapp.models.OrderDetail
 import com.crimsom.mydelapp.ui.customer_mode.adapters.OrderDetailAdapter
 import com.crimsom.mydelapp.ui.customer_mode.viewmodels.OrderDetailViewModel
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.Constants
+import java.text.SimpleDateFormat
 
 class CustomerOrderDetailsFragment : Fragment() {
 
@@ -34,7 +36,6 @@ class CustomerOrderDetailsFragment : Fragment() {
         if(this.orderId != 0){
             viewModel.getOrderData(Auth.access_token, this.orderId);
         }
-
 
         this.setupObservers();
         this.setupData();
@@ -66,9 +67,10 @@ class CustomerOrderDetailsFragment : Fragment() {
     }
 
     private fun setupData(){
-        binding.ordDetTotalLabel.text = "Bs${viewModel.order.value?.total}";
-        binding.ordDetDateLabel.text = viewModel.order.value?.createdAt.toString();
         binding.ordDetRestaurantLabel.text = viewModel.restaurant.value?.name;
+        binding.ordDetTotalLabel.text = "Bs${viewModel.order.value?.total}";
+        binding.ordDetDateLabel.text = "Fecha: " + Constants.getFullDateInFormat(viewModel.order.value?.createdAt!!);
+        binding.ordDetStatusLabel.text = "Estado: " + Auth.getOrderStatusDescription(viewModel.order.value?.status ?: 0);
 
     }
 

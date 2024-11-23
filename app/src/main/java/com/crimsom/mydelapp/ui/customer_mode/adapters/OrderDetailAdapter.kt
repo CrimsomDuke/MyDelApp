@@ -5,25 +5,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.OrderDetailListItemBinding
 import com.crimsom.mydelapp.models.OrderDetail
 
 class OrderDetailAdapter(var orderDetails : List<OrderDetail>) : RecyclerView.Adapter<OrderDetailAdapter.OrderDetailViewHolder>() {
 
-    private var orderDetailList = mutableListOf<OrderDetail>();
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderDetailViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.order_detail_list_item, parent, false);
-        return OrderDetailViewHolder(view);
+        return OrderDetailViewHolder(OrderDetailListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).root);
     }
 
     override fun onBindViewHolder(holder: OrderDetailViewHolder, position: Int) {
-        holder.bind(orderDetailList[position]);
+        holder.bind(orderDetails[position]);
     }
 
     override fun getItemCount(): Int {
-        return orderDetailList.size;
+        return orderDetails.size;
     }
 
     public fun updateData(newData : List<OrderDetail>){
@@ -36,7 +32,7 @@ class OrderDetailAdapter(var orderDetails : List<OrderDetail>) : RecyclerView.Ad
 
         fun bind(orderDetail : OrderDetail){
             binding.ordDetProductLabel.text = orderDetail.product.name;
-            binding.ordDetTotalDetLabel.text = "Bs${orderDetail.price}";
+            binding.ordDetTotalDetLabel.text = "Bs${orderDetail.price * orderDetail.quantity}";
             binding.ordDetQuantityLabel.text = "x${orderDetail.quantity}";
 
             Glide.with(itemView.context)

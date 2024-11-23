@@ -39,10 +39,16 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
     ): View? {
         binding = FragmentCustomerFullOrderMapBinding.inflate(inflater, container, false)
 
+        //we hide the fragment of status until we have the order data
+        binding.fragmentContainerCustOrderStatus.visibility = View.GONE;
+
         setupObservers();
 
         if(this.orderId != 0){
             viewModel.getOrderData(Auth.access_token, this.orderId);
+        }else{
+            //it means we are just creating the order
+            binding.fragmentContainerCustOrderStatus.visibility = View.VISIBLE;
         }
 
         return binding.root
@@ -133,6 +139,9 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
         viewModel.restaurantData.observe(viewLifecycleOwner){
             Log.i("ORDER_DATA_IN_MAP", "Restaurant data: $it")
             loadOrderDataIntoSubFragments()
+
+            //we show the fragment of status now that the fucking user won't cause bugs
+            binding.fragmentContainerCustOrderStatus.visibility = View.VISIBLE;
         }
     }
 

@@ -20,4 +20,6 @@ data class Order(
 
     @SerializedName("order_details") public var orderDetails : List<OrderDetail> = listOf()
     @SerializedName("details") public var orderDetailsOnSending : List<OrderDetailOnSending> = listOf()
+
+    @SerializedName("driver") public var driver : Driver = Driver(0, 0);
 }

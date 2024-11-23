@@ -9,7 +9,9 @@ import com.crimsom.mydelapp.repositories.RestaurantRepository
 
 class OrderDetailViewModel : ViewModel() {
 
-    private var _order = MutableLiveData<Order>();
+    private var _order = MutableLiveData<Order>().apply {
+        value = Order(0,0,0,0.0,null, "", "", 0);
+    };
     val order : MutableLiveData<Order> = _order;
 
     private var _restaurant = MutableLiveData<Restaurant>();
@@ -18,6 +20,8 @@ class OrderDetailViewModel : ViewModel() {
     public fun getOrderData(token : String, orderId : Int){
         OrderRepository.getOrderById(token, orderId, {
             _order.value = it;
+            _order.value!!.orderDetails = it.orderDetails;
+            println("order details: " + it.orderDetails.size)
         }, {
             println(it.message)
         })

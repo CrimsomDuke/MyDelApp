@@ -13,7 +13,7 @@ import com.crimsom.mydelapp.utilities.Auth
 
 class OrderAdapter(var ordersList : List<Order>, var onCurrentOrderItemListener: OnCurrentOrderItemListener) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
-        return return OrderViewHolder(CustOrderListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).root)
+        return OrderViewHolder(CustOrderListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false).root)
     }
 
     override fun onBindViewHolder(holder: OrderViewHolder, position: Int) {

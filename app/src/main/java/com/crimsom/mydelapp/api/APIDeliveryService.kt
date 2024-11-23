@@ -1,9 +1,11 @@
 package com.crimsom.mydelapp.api
 
+import com.crimsom.mydelapp.models.Driver
 import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.models.Product
 import com.crimsom.mydelapp.models.Restaurant
 import com.crimsom.mydelapp.models.User
+import com.crimsom.mydelapp.models.aux_models.DriverLocation
 import com.crimsom.mydelapp.models.aux_models.LoginRequest
 import com.crimsom.mydelapp.models.aux_models.LoginResponse
 import retrofit2.Call
@@ -115,5 +117,17 @@ interface APIDeliveryService {
         @Header("Authorization") token : String,
         @Path("id") id : Int
     ) : Call<Order>
+
+
+    /**
+     * DRIVER MODULE
+     */
+
+    @POST("drivers/location")
+    fun sendDriverLocation(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+        @Body location : DriverLocation
+    ) : Call<Driver>
 
 }

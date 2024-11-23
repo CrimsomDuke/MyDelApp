@@ -70,7 +70,6 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener, OnCurrentOrd
         super.onResume()
         //reset all values
         clearData()
-
     }
 
     private fun setupObservers(){
@@ -82,6 +81,7 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener, OnCurrentOrd
 
         mainViewModel.currentUser.observe(viewLifecycleOwner) {
             Auth.currentUser = it;
+            binding.custWelcomeLabel.text = "Bienvenido ${it.username} ¿Que pedirás hoy?"
         }
 
         mainViewModel.ordersList.observe(viewLifecycleOwner) {
