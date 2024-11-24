@@ -9,11 +9,11 @@
 
     <ImageView
         android:id="@+id/register_appLogo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:layout_margin="20dp"
         android:padding="10dp"
-        android:src="@drawable/ic_launcher_foreground" />
+        android:src="@drawable/mydelapp_logo" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/register_usernameInputLayout"

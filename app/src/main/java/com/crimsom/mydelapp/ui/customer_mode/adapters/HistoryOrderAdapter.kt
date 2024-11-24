@@ -72,9 +72,9 @@ class HistoryOrderAdapter(var orderList : List<Order>, var onOrderDetailsListene
                 }
             }
 
-            binding.custOrdStatusDescLabel.text = order.restaurantId.toString()
+            binding.custOrdStatusDescLabel.text = Auth.getOrderStatusDescription(order.status);
             binding.custOrdAddressLabel.text = order.address;
-            binding.custOrdDriverLabel.text = order.driverId.toString();
+            binding.custOrdDriverLabel.text = "Bs" + order.total.toString();
 
             binding.custOrdDateLabel.visibility = View.VISIBLE;
             binding.custOrdDateLabel.text = Constants.getFullDateInFormat(order.createdAt);

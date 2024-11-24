@@ -3,6 +3,7 @@ package com.crimsom.mydelapp.ui.common.viewmodels
 import androidx.lifecycle.MutableLiveData
 import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.models.User
+import com.crimsom.mydelapp.repositories.DriverRepository
 import com.crimsom.mydelapp.repositories.OrderRepository
 import com.crimsom.mydelapp.repositories.UserRepository
 import com.crimsom.mydelapp.utilities.Auth
@@ -31,6 +32,14 @@ class ProfileViewModel {
 
     fun getOrdersHistory(token : String){
         OrderRepository.getOrdersOfUser(token, {
+            _orders.value = it;
+        }, {
+            println(it.message)
+        })
+    }
+
+    fun getOrderOfDriver(token : String){
+        DriverRepository.getOrdersOfDriver(token, {
             _orders.value = it;
         }, {
             println(it.message)

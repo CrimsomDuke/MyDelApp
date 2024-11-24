@@ -130,4 +130,10 @@ interface APIDeliveryService {
         @Body location : DriverLocation
     ) : Call<Driver>
 
+    @GET("drivers/orders")
+    fun getOrdersOfDriver(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+    ) : Call<List<Order>>
+
 }

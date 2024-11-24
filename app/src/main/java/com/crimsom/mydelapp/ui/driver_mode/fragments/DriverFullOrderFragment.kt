@@ -42,10 +42,14 @@ class DriverFullOrderFragment : Fragment(), OnDriverTakesOrderListener {
 
         setupObservers();
 
+        binding.driverStatusFragmentContainer.visibility = View.GONE;
+
         if(this.orderId != 0){
             viewModel.getOrderData(Auth.access_token, this.orderId);
         }else{
             Log.e("DriverFullOrderFragment", "No order id was passed to the fragment");
+            //it means we are just creating the order
+            binding.driverStatusFragmentContainer.visibility = View.VISIBLE;
         }
 
         return binding.root;
@@ -135,6 +139,9 @@ class DriverFullOrderFragment : Fragment(), OnDriverTakesOrderListener {
         viewModel.restaurant.observe(viewLifecycleOwner) {
             //Once loaded the data we need, we update the sub fragments
             loadOrderDataIntoSubFragments();
+
+            //we show the status fragment once the data is fetched, fucking users
+            binding.driverStatusFragmentContainer.visibility = View.VISIBLE;
         }
     }
 }

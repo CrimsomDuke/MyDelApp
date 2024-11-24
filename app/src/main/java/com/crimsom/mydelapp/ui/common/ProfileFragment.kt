@@ -34,7 +34,13 @@ class ProfileFragment : Fragment(), OnOrderDetailsListener, OnCurrentOrderItemLi
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         profileViewModel.getCurrentUserFromAuth();
-        profileViewModel.getOrdersHistory(Auth.access_token);
+
+        //si el usuario es normal, su historial, si es chofer, sus ordenes activas
+        if(Auth.IS_CURRENT_USER_DRIVER){
+            profileViewModel.getOrderOfDriver(Auth.access_token);
+        }else{
+            profileViewModel.getOrdersHistory(Auth.access_token);
+        }
 
         this.setupUserDetails();
         this.setupRecyclerView();
@@ -56,8 +62,7 @@ class ProfileFragment : Fragment(), OnOrderDetailsListener, OnCurrentOrderItemLi
         binding.custTypeUserLabel.text =  if(Auth.IS_CURRENT_USER_DRIVER) "Conductor" else "Cliente"
 
         if(Auth.IS_CURRENT_USER_DRIVER){
-            binding.custHistoryLabel.visibility = View.GONE;
-            binding.rvOrderHistory.visibility = View.GONE;
+            binding.custHistoryLabel.text = "Ordenes activas"
         }
     }
 
@@ -104,13 +109,27 @@ class ProfileFragment : Fragment(), OnOrderDetailsListener, OnCurrentOrderItemLi
     override fun onGoToOrderDetailsById(orderId: Int) {
         val bundle = Bundle()
         bundle.putInt("orderId", orderId)
-        findNavController().navigate(R.id.action_customerTabFragment_to_customerOrderDetailsFragment, bundle)
+        if(Auth.IS_CURRENT_USER_DRIVER) {
+            findNavController().navigate(
+                R.id.action_driverTabFragment_to_driverFullOrderFragment,
+                bundle
+            )
+        }else{
+            findNavController().navigate(R.id.action_customerTabFragment_to_customerOrderDetailsFragment, bundle)
+        }
     }
 
     //si la orden esta activa
     override fun onCurrentOrderItemClick(orderId: Int) {
         var bundle = Bundle()
         bundle.putInt("orderId", orderId)
-        findNavController().navigate(R.id.action_customerProfileFragment_to_customerFullOrderMapFragment, bundle)
+        if(Auth.IS_CURRENT_USER_DRIVER) {
+            findNavController().navigate(
+                R.id.action_driverTabFragment_to_driverFullOrderFragment,
+                bundle
+            )
+        }else{
+            findNavController().navigate(R.id.action_customerTabFragment_to_customerOrderDetailsFragment, bundle)
+        }
     }
 }
