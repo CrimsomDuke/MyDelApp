@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.OnCurrentOrderItemListener
-import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerInteractionListener
 import com.crimsom.mydelapp.aux_interfaces.OnOrderDetailsListener
 import com.crimsom.mydelapp.databinding.CustOrderListItemBinding
 import com.crimsom.mydelapp.models.Order

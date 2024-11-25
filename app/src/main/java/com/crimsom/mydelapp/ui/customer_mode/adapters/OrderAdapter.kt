@@ -10,6 +10,7 @@ import com.crimsom.mydelapp.aux_interfaces.OnCurrentOrderItemListener
 import com.crimsom.mydelapp.databinding.CustOrderListItemBinding
 import com.crimsom.mydelapp.models.Order
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.Constants
 
 class OrderAdapter(var ordersList : List<Order>, var onCurrentOrderItemListener: OnCurrentOrderItemListener) : RecyclerView.Adapter<OrderAdapter.OrderViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderViewHolder {
@@ -38,7 +39,7 @@ class OrderAdapter(var ordersList : List<Order>, var onCurrentOrderItemListener:
 
         public fun bind(order: Order, onCurrentOrderItemListener: OnCurrentOrderItemListener){
 
-            if(order.status == 3){
+            if(order.status == Constants.ORDER_STATUS_DELIVERED){
                 binding.apply {
                     custOrdStatusDescLabel.setTextColor(Color.BLACK)
                     custOrdAddressLabel.setTextColor(Color.BLACK)
@@ -59,6 +60,8 @@ class OrderAdapter(var ordersList : List<Order>, var onCurrentOrderItemListener:
             binding.custOrdDriverLabel.text = order.driverId.toString();
             if(order.driverId == null){
                 binding.custOrdDriverLabel.text = "Aun sin chofer"
+            }else{
+                binding.custOrdDriverLabel.text = "Chofer asignado ";
             }
 
             //action

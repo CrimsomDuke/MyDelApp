@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerInteractionListener
+import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerConfirmationListener
 import com.crimsom.mydelapp.aux_interfaces.OnOrderDetailsListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerCurrentOrderStatusBinding
 import com.crimsom.mydelapp.utilities.Auth
@@ -14,7 +14,7 @@ class CustomerCurrentOrderStatusFragment : Fragment() {
 
     private lateinit var binding: FragmentCustomerCurrentOrderStatusBinding;
 
-    private lateinit var onOrderCustomerInteractionListener : OnOrderCustomerInteractionListener;
+    private lateinit var onOrderCustomerConfirmationListener : OnOrderCustomerConfirmationListener;
     private lateinit var onOrderDetailListener: OnOrderDetailsListener;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,13 +35,13 @@ class CustomerCurrentOrderStatusFragment : Fragment() {
 
     private fun setupConfirmOrderLayout(){
         binding.custOrdConfirmOrderButton.setOnClickListener {
-            onOrderCustomerInteractionListener.onOrderConfirmation();
+            onOrderCustomerConfirmationListener.onOrderConfirmation();
         }
     }
 
     //to call in upper fragment
-    public fun setOnOrderCustomerInteractionListener(listener : OnOrderCustomerInteractionListener){
-        this.onOrderCustomerInteractionListener = listener;
+    public fun setOnOrderCustomerConfirmationListener(listener : OnOrderCustomerConfirmationListener){
+        this.onOrderCustomerConfirmationListener = listener;
     }
 
     public fun setOnOrderDetailListener(listener : OnOrderDetailsListener){

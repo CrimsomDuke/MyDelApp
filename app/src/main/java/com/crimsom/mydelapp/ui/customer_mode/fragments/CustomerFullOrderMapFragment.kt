@@ -6,12 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
-import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerInteractionListener
+import com.crimsom.mydelapp.aux_interfaces.OnOrderCustomerConfirmationListener
 import com.crimsom.mydelapp.aux_interfaces.OnOrderDetailsListener
+import com.crimsom.mydelapp.aux_interfaces.OnOrderUpdateStatusListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerFullOrderMapBinding
 import com.crimsom.mydelapp.repositories.OrderRepository
+import com.crimsom.mydelapp.tasks.UpdateOrderStatusTask
 import com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerCurrentOrderStatusFragment
 import com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerMapFragment
 import com.crimsom.mydelapp.ui.customer_mode.viewmodels.FullOrderMapViewModel
@@ -20,13 +24,17 @@ import com.crimsom.mydelapp.utilities.ShoppingCart
 import com.google.android.gms.maps.model.LatLng
 
 
-class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListener , OnOrderDetailsListener{
+class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerConfirmationListener , OnOrderDetailsListener, OnOrderUpdateStatusListener{
 
 
     private lateinit var binding : FragmentCustomerFullOrderMapBinding;
     private var viewModel = FullOrderMapViewModel();
 
+    private lateinit var updateOrderTask : UpdateOrderStatusTask;
+
     public var orderId : Int = 0;
+
+    private lateinit var mapFragment : CustomerMapFragment;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,12 +59,18 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
             binding.fragmentContainerCustOrderStatus.visibility = View.VISIBLE;
         }
 
+        updateOrderTask = UpdateOrderStatusTask.getInstance(requireActivity() as MainActivity)
+        updateOrderTask.setOnOrderUpdateStatusListener(this)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupFragmentsActions()
+
+        mapFragment = (binding.fragmentContainerCustOrderMap.getFragment<CustomerMapFragment>())
+
     }
 
     private fun setupFragmentsActions(){
@@ -67,10 +81,10 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
         customerCurrentOrderStatusFragment.setOnOrderDetailListener(this)
         //set up the current order status fragment actions
         if(orderId != 0){
+            updateOrderTask.startTask();
             return;
         }
-        //set the listeners
-        customerCurrentOrderStatusFragment.setOnOrderCustomerInteractionListener(this)
+        customerCurrentOrderStatusFragment.setOnOrderCustomerConfirmationListener(this)
     }
 
     override fun onOrderConfirmation() {
@@ -92,7 +106,6 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
             //we kill the shopping cart
             ShoppingCart.reset();
 
-            //bundle the order id to the next fragment
             val bundle = Bundle()
             bundle.putInt("orderId", myOrder.id)
             findNavController().navigate(R.id.action_customerFullOrderMapFragment_self, bundle)
@@ -111,6 +124,7 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
 
         val restaurant = viewModel.restaurantData.value!!
         val order = viewModel.orderData.value!!
+        val driver = viewModel.orderData.value!!.driver;
 
         //Restaurant lcoation
         var originLocation = LatLng(
@@ -125,7 +139,15 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
         )
 
         //we set the markers with their titles
-        mapFragment.setupOriginAndDestinyMarkers(originLocation, restaurant.name, destinationLocation, order.address)
+        if(driver != null){
+            var driverLocation = LatLng(
+                driver.latitude.toDouble(),
+                driver.longitude.toDouble()
+            )
+            mapFragment.setupMarkers(originLocation, restaurant.name, destinationLocation, order.address, driverLocation, driver.user.username)
+        }else{
+            mapFragment.setupOriginAndDestinyMarkers(originLocation, restaurant.name, destinationLocation, order.address)
+        }
     }
 
     private fun setupObservers(){
@@ -145,6 +167,11 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        updateOrderTask.stopTask()
+    }
+
     override fun onGoToOrderDetailsByAction() {
         var bundle = Bundle()
         bundle.putInt("orderId", orderId)
@@ -153,5 +180,11 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerInteractionListe
 
     override fun onGoToOrderDetailsById(orderId: Int) {
         println("No va a hacer nada xd")
+    }
+
+    override fun onOrderUpdateStatus() {
+        Toast.makeText(context, "TEsting", Toast.LENGTH_SHORT).show()
+        //actualizamos el estado de la orden
+        viewModel.getOrderData(Auth.access_token, this.orderId)
     }
 }

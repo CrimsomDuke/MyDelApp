@@ -1,6 +1,9 @@
 package com.crimsom.mydelapp.models
 
+import com.google.gson.annotations.SerializedName
+
 data class Driver(var id : Int, var userId : Int) {
-    var latitud : Double = 0.0;
-    var longitud : Double = 0.0;
+    @SerializedName("latitude") var latitude : String = "";
+    @SerializedName("longitude") var longitude : String = "";
+    @SerializedName("user") var user : User = User(0, "", "", "");
 }

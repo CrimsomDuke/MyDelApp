@@ -129,7 +129,7 @@ class ProfileFragment : Fragment(), OnOrderDetailsListener, OnCurrentOrderItemLi
                 bundle
             )
         }else{
-            findNavController().navigate(R.id.action_customerTabFragment_to_customerOrderDetailsFragment, bundle)
+            findNavController().navigate(R.id.action_customerTabFragment_to_customerFullOrderMapFragment, bundle)
         }
     }
 }

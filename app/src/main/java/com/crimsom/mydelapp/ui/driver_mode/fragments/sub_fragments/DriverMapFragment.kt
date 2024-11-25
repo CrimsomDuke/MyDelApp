@@ -25,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
@@ -138,18 +139,34 @@ class DriverMapFragment : Fragment(), OnMapReadyCallback, MapUpdateListener {
         mMap?.addMarker(
             MarkerOptions().position(
                 origin
-            ).title(originTitle)
+            ).title(originTitle).icon(
+                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)
+            )
         );
 
         mMap?.addMarker(
             MarkerOptions().position(
                 destiny
-            ).title(destinyTitle)
+            ).title(destinyTitle).icon(
+                BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)
+            )
         );
     }
 
     override fun cleanMarkers() {
         mMap?.clear();
+    }
+
+    override fun setupMarkers(
+        orderLocation: LatLng,
+        orderString: String,
+        restaurantLocation: LatLng,
+        restaurantString: String,
+        driverLocation: LatLng,
+        driverString: String
+    ) {
+        //aqui no hace nada
+        println("No hace nada xd")
     }
 
 }
