@@ -8,11 +8,14 @@ import com.crimsom.mydelapp.models.User
 import com.crimsom.mydelapp.models.aux_models.DriverLocation
 import com.crimsom.mydelapp.models.aux_models.LoginRequest
 import com.crimsom.mydelapp.models.aux_models.LoginResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface APIDeliveryService {
@@ -135,5 +138,14 @@ interface APIDeliveryService {
         @Header("Accept") accept : String = "application/json",
         @Header("Authorization") token : String,
     ) : Call<List<Order>>
+
+    @Multipart
+    @POST("orders/{id}/deliverproof")
+    fun sendDeliveryProof(
+        @Header("Accept") accept : String = "application/json",
+        @Header("Authorization") token : String,
+        @Path("id") id : Int,
+        @Part file : MultipartBody.Part
+    ) : Call<Order>
 
 }

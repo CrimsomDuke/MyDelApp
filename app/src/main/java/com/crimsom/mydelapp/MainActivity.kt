@@ -9,10 +9,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.crimsom.mydelapp.tasks.SendDriverLocationTask
+import com.crimsom.mydelapp.tasks.UpdateOrderStatusTask
 import com.crimsom.mydelapp.utilities.PermissionsUtil
 
 class MainActivity : AppCompatActivity() {
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         PermissionsUtil.requestMapPermissions(this, PERMISSION_REQUEST_CODE)
+        PermissionsUtil.requestCameraPermissions(this, MainActivity.PERMISSION_REQUEST_CODE)
     }
 
     override fun onRequestPermissionsResult(
@@ -73,6 +74,9 @@ class MainActivity : AppCompatActivity() {
         //stop all the tasks
         val sendDriverLocationTask = SendDriverLocationTask.getInstance(this);
         sendDriverLocationTask.stopTask();
+
+        val updateOrderStatusTask = UpdateOrderStatusTask.getInstance(this);
+        updateOrderStatusTask.stopTask();
     }
 
 

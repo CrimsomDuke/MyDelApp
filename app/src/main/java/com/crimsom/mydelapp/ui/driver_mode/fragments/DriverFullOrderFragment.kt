@@ -1,5 +1,9 @@
 package com.crimsom.mydelapp.ui.driver_mode.fragments
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Camera
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -7,19 +11,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
+import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.OnDriverTakesOrderListener
 import com.crimsom.mydelapp.databinding.FragmentDriverFullOrderBinding
+import com.crimsom.mydelapp.repositories.MediaRepository
 import com.crimsom.mydelapp.repositories.OrderRepository
 import com.crimsom.mydelapp.ui.driver_mode.fragments.sub_fragments.DriverMapFragment
 import com.crimsom.mydelapp.ui.driver_mode.fragments.sub_fragments.DriverStatusFragment
 import com.crimsom.mydelapp.ui.driver_mode.viewmodels.DriverFullOrderViewModel
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.CameraUtil
 import com.crimsom.mydelapp.utilities.ProgressDialogBuilder
 import com.google.android.gms.maps.model.LatLng
 
 class DriverFullOrderFragment : Fragment(), OnDriverTakesOrderListener {
+
+    lateinit var cameraLauncher: ActivityResultLauncher<Intent>
 
     private lateinit var binding : FragmentDriverFullOrderBinding;
     private var viewModel : DriverFullOrderViewModel = DriverFullOrderViewModel();
@@ -32,6 +43,33 @@ class DriverFullOrderFragment : Fragment(), OnDriverTakesOrderListener {
         super.onCreate(savedInstanceState)
         this.orderId = arguments?.getInt("orderId") ?: 0;
         Log.i("DRIVER_FULL_ORDER","DriverFullOrderFragment: Order id: $orderId");
+
+        cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            Log.d("DriverFullOrderFragment", "Camera result: $result")
+            if(result.resultCode == Activity.RESULT_OK){
+                // Get the bitmap from the result
+                val bitmap = CameraUtil.getBitmapFromActivityResult(result)
+
+                try {
+                    MediaRepository.sendDeliveryProof(
+                        Auth.access_token,
+                        orderId,
+                        bitmap!!,
+                        onSuccess = {
+                            Log.i("DriverFullOrderFragment", "Proof sent")
+                            findNavController().navigate(R.id.action_driverFullOrderFragment_to_orderCompletedFragment3)
+                        }, onError = {
+                            Log.e("DriverFullOrderFragment", "Error sending proof: $it")
+                            Toast.makeText(context, "Error al enviar la prueba", Toast.LENGTH_SHORT).show()
+                            findNavController().navigate(R.id.action_driverFullOrderFragment_to_orderCompletedFragment3)
+                        }
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+
     }
 
     override fun onCreateView(
@@ -123,6 +161,10 @@ class DriverFullOrderFragment : Fragment(), OnDriverTakesOrderListener {
     override fun onDriverArrived() {
         OrderRepository.deliveredOrder(Auth.access_token, viewModel.order.value!!.id, onSuccess = {
             viewModel.order.value = it;
+
+            //we show the camera to take the proof
+            CameraUtil.launchCamera(cameraLauncher);
+
         }, onError = {
             Log.e("DriverFullOrderFragment", "Error arrived order: $it")
             Toast.makeText(context, "Error al aceptar la orden", Toast.LENGTH_SHORT).show()

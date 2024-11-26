@@ -1,18 +1,24 @@
 package com.crimsom.mydelapp.ui.driver_mode.fragments.sub_fragments
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.navigation.fragment.findNavController
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.OnDriverTakesOrderListener
 import com.crimsom.mydelapp.databinding.FragmentDriverStatusBinding
 import com.crimsom.mydelapp.models.Order
+import com.crimsom.mydelapp.repositories.MediaRepository
 import com.crimsom.mydelapp.repositories.OrderRepository
 import com.crimsom.mydelapp.ui.driver_mode.fragments.DriverFullOrderFragment
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.CameraUtil
 import com.crimsom.mydelapp.utilities.Constants
 
 
@@ -62,7 +68,12 @@ class DriverStatusFragment : Fragment() {
             //if the driver is on the way, the next status is arrived
             if(status == Constants.ORDER_STATUS_ON_WAY){
                 onDriverTakesOrderListener.onDriverArrived()
-                findNavController().navigate(R.id.action_driverFullOrderFragment_to_orderCompletedFragment3)
+            }
+
+            //por si hay algun error, mandar al driver a la pantalla principal
+            if(status > 4 && status < 0){
+                //open camera
+                findNavController().navigate(R.id.driverTabFragment);
             }
 
         }

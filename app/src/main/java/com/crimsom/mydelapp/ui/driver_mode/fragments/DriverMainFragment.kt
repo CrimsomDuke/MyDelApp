@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.FakeDB
@@ -25,6 +26,7 @@ import com.crimsom.mydelapp.tasks.SendDriverLocationTask
 import com.crimsom.mydelapp.ui.driver_mode.adapters.UntakenOrderAdapter
 import com.crimsom.mydelapp.ui.driver_mode.viewmodels.DriverMainViewModel
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.PermissionsUtil
 import com.techiness.progressdialoglibrary.ProgressDialog
 
 
