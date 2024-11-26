@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -83,5 +84,11 @@ class MainActivity : AppCompatActivity() {
     public fun startSendDriverLocationTask(){
         val sendDriverLocationTask = SendDriverLocationTask.getInstance(this);
         sendDriverLocationTask.startTask();
+    }
+
+    public fun setBackButtonAction(action : () -> Unit){
+        onBackPressedDispatcher.addCallback {
+            action()
+        }
     }
 }

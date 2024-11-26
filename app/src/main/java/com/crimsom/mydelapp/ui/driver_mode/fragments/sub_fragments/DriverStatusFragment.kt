@@ -62,6 +62,10 @@ class DriverStatusFragment : Fragment() {
 
             //if the driver is on the way, the next status is arrived
             if(status == Constants.ORDER_STATUS_ACCEPTED){
+
+                //we deactivate to enable when data is received
+                binding.driverOrdNextStatusButton.isEnabled = false;
+
                 onDriverTakesOrderListener.onDriverIsOnTheWay()
                 this.changeStatusUI(status);
             }
@@ -73,7 +77,7 @@ class DriverStatusFragment : Fragment() {
             //por si hay algun error, mandar al driver a la pantalla principal
             if(status > 4 && status < 0){
                 //open camera
-                findNavController().navigate(R.id.driverTabFragment);
+                binding.driverOrdNextStatusButton.isEnabled = false;
             }
 
         }
@@ -84,6 +88,9 @@ class DriverStatusFragment : Fragment() {
             binding.driverOrdConfirmationLayout.visibility = View.GONE;
             changeStatusUI(order.status);
         }
+
+        //we reactivate this bastard
+        binding.driverOrdNextStatusButton.isEnabled = true;
     }
 
     private fun changeStatusUI(status : Int){

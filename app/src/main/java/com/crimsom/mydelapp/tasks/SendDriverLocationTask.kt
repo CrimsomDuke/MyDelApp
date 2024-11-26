@@ -46,7 +46,7 @@ class SendDriverLocationTask {
                 }
 
                 for (location in locationResult.locations) {
-                    Toast.makeText(ACTIVITY, "Latitud: ${location.latitude}, Longitud: ${location.longitude}", Toast.LENGTH_SHORT).show()
+                    Log.i("SendDriverLocationTask", "Ubicación: ${location.latitude}, ${location.longitude}")
                     this@SendDriverLocationTask.onDriverLocationUpdateListener.onDriverLocationUpdate(location);
                 }
             }

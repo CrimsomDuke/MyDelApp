@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
@@ -20,6 +21,8 @@ import com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerCur
 import com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerMapFragment
 import com.crimsom.mydelapp.ui.customer_mode.viewmodels.FullOrderMapViewModel
 import com.crimsom.mydelapp.utilities.Auth
+import com.crimsom.mydelapp.utilities.Constants
+import com.crimsom.mydelapp.utilities.ProgressDialogBuilder
 import com.crimsom.mydelapp.utilities.ShoppingCart
 import com.google.android.gms.maps.model.LatLng
 
@@ -81,13 +84,27 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerConfirmationList
         customerCurrentOrderStatusFragment.setOnOrderDetailListener(this)
         //set up the current order status fragment actions
         if(orderId != 0){
+            //iniciamos la task y configuramos el backButton
             updateOrderTask.startTask();
+
+            //we set this behaviour due to the fact that the user shall not return to ShoppingCartFragment
+            //and we stop the fucking task
+            (this.requireActivity() as MainActivity).onBackPressedDispatcher.addCallback(this) {
+                updateOrderTask.stopTask();
+                findNavController().navigate(R.id.customerTabFragment);
+            }
+
             return;
         }
         customerCurrentOrderStatusFragment.setOnOrderCustomerConfirmationListener(this)
     }
 
     override fun onOrderConfirmation() {
+
+        var progressDialog = ProgressDialogBuilder.startLoadingDialog(requireContext(),
+            "Creando orden...",
+            "Por favor espere"
+        )
 
         var myOrder = ShoppingCart.createOrderFromCart(Auth.currentUserId, Auth.cust_selectedRestaurantId, "Pendiente", "Pendiente")
         myOrder.address = ShoppingCart.orderAddress; //We asign the address
@@ -99,6 +116,10 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerConfirmationList
         Log.i("ORDER_DATA_PRE", "Order PRE_POST: $myOrder")
 
         OrderRepository.createOrder(Auth.access_token, myOrder, onSuccess = {
+
+            //chao progress dialog
+            progressDialog.dismiss()
+
             Log.i("ORDER_DATA", "Order created: $it")
 
             myOrder = it;
@@ -112,6 +133,7 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerConfirmationList
 
         }, onError = {
             Log.e("ORDER_DATA", "Error creating order: $it")
+            progressDialog.dismiss()
         })
 
     }
@@ -154,6 +176,11 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerConfirmationList
         //first, this one will get triggered
         viewModel.orderData.observe(viewLifecycleOwner){
             Log.i("ORDER_DATA_IN_MAP", "Order data: $it")
+
+            if(it.status == Constants.ORDER_STATUS_DELIVERED){
+                findNavController().navigate(R.id.action_customerFullOrderMapFragment_to_orderCompletedFragment);
+            }
+
             viewModel.getRestaurantData(Auth.access_token, it.restaurantId)
         }
 
@@ -183,8 +210,9 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerConfirmationList
     }
 
     override fun onOrderUpdateStatus() {
-        Toast.makeText(context, "TEsting", Toast.LENGTH_SHORT).show()
+        Log.i("ORDER_UPDATE_STATUS", "Updating order status")
         //actualizamos el estado de la orden
         viewModel.getOrderData(Auth.access_token, this.orderId)
     }
+
 }

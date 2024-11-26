@@ -1,5 +1,6 @@
 package com.crimsom.mydelapp.ui.customer_mode.fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,13 +18,17 @@ import com.crimsom.mydelapp.ui.customer_mode.adapters.RestaurantAdapter
 import com.crimsom.mydelapp.ui.customer_mode.viewmodels.MainCustomerViewModel
 import com.crimsom.mydelapp.utilities.Auth
 import com.crimsom.mydelapp.utilities.Constants
+import com.crimsom.mydelapp.utilities.ProgressDialogBuilder
 import com.crimsom.mydelapp.utilities.ShoppingCart
+import com.techiness.progressdialoglibrary.ProgressDialog
 
 class CustomerMainFragment : Fragment(), OnRestaurantClickListener, OnCurrentOrderItemListener {
 
     private lateinit var binding : FragmentCustomerMainBinding;
 
     private var mainViewModel = MainCustomerViewModel();
+
+    private lateinit var progressDialog: ProgressDialog;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,6 +111,11 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener, OnCurrentOrd
         var bundle = Bundle()
         bundle.putInt("orderId", orderId)
         navController.navigate(R.id.action_customerTabFragment_to_customerFullOrderMapFragment, bundle)
+    }
+
+    public fun updateData(){
+        mainViewModel.getRestaurants(Auth.access_token);
+        mainViewModel.getOrderOfUser(Auth.access_token);
     }
 
 }
