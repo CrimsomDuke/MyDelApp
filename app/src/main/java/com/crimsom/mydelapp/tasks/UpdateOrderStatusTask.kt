@@ -11,7 +11,7 @@ class UpdateOrderStatusTask {
 
     private lateinit var onOrderUpdateStatusListener: OnOrderUpdateStatusListener;
 
-    private var UPDATE_INTERVAL : Long = 30000L;
+    private var UPDATE_INTERVAL : Long = 10000L;
     private lateinit var ACTIVITY : AppCompatActivity;
 
     private val handler = Handler(Looper.getMainLooper()) // For posting tasks to the main thread

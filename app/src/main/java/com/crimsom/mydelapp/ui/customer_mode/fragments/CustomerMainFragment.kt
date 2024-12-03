@@ -6,13 +6,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crimsom.mydelapp.FakeDB
+import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.aux_interfaces.OnCurrentOrderItemListener
 import com.crimsom.mydelapp.aux_interfaces.OnRestaurantClickListener
 import com.crimsom.mydelapp.databinding.FragmentCustomerMainBinding
+import com.crimsom.mydelapp.tasks.UpdateOrderStatusTask
 import com.crimsom.mydelapp.ui.customer_mode.adapters.OrderAdapter
 import com.crimsom.mydelapp.ui.customer_mode.adapters.RestaurantAdapter
 import com.crimsom.mydelapp.ui.customer_mode.viewmodels.MainCustomerViewModel
@@ -117,5 +121,4 @@ class CustomerMainFragment : Fragment(), OnRestaurantClickListener, OnCurrentOrd
         mainViewModel.getRestaurants(Auth.access_token);
         mainViewModel.getOrderOfUser(Auth.access_token);
     }
-
 }

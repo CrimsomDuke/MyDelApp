@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.navigation.fragment.findNavController
+import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.R
 import com.crimsom.mydelapp.databinding.FragmentOrderCompletedBinding
 import com.crimsom.mydelapp.utilities.Auth
@@ -25,6 +27,7 @@ class OrderCompletedFragment : Fragment() {
         binding = FragmentOrderCompletedBinding.inflate(inflater, container, false)
 
         setupButtons();
+        this.setupBackButton();
 
         return binding.root
     }
@@ -32,9 +35,18 @@ class OrderCompletedFragment : Fragment() {
     private fun setupButtons() {
         binding.finishedButton.setOnClickListener {
             if(Auth.IS_CURRENT_USER_DRIVER){
-                findNavController().navigate(R.id.customerTabFragment)
-            } else {
                 findNavController().navigate(R.id.driverTabFragment)
+            } else {
+                findNavController().navigate(R.id.customerTabFragment)
+            }
+        }
+    }
+    private fun setupBackButton(){
+        (this.requireActivity() as MainActivity).onBackPressedDispatcher.addCallback(this) {
+            if(Auth.IS_CURRENT_USER_DRIVER){
+                findNavController().navigate(R.id.driverTabFragment)
+            } else {
+                findNavController().navigate(R.id.customerTabFragment)
             }
         }
     }

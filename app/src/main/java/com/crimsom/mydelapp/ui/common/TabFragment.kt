@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.crimsom.mydelapp.MainActivity
 import com.crimsom.mydelapp.databinding.FragmentTabBinding
@@ -29,6 +31,7 @@ class TabFragment : Fragment() {
 
         setupTabLayout();
         deactivateSwipeChange();
+        this.setupBackButton();
 
         return binding.root
     }
@@ -53,4 +56,11 @@ class TabFragment : Fragment() {
     private fun deactivateSwipeChange(){
         binding.tabViewPager.isUserInputEnabled = false;
     }
+
+    private fun setupBackButton(){
+        (this.requireActivity() as MainActivity).onBackPressedDispatcher.addCallback(this) {
+            Toast.makeText(context, "Cierra sesión en la pantalla de perfil para salir", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }

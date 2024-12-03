@@ -61,7 +61,7 @@ class OrderAdapter(var ordersList : List<Order>, var onCurrentOrderItemListener:
             if(order.driverId == null){
                 binding.custOrdDriverLabel.text = "Aun sin chofer"
             } else{
-                if(order.driver != null){
+                if(order.driverId != 0){
                     binding.custOrdDriverLabel.text = "Chofer asignado ";
                 }
             }

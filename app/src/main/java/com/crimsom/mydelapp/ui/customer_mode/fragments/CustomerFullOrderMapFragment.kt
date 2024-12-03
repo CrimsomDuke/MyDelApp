@@ -86,13 +86,7 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerConfirmationList
         if(orderId != 0){
             //iniciamos la task y configuramos el backButton
             updateOrderTask.startTask();
-
-            //we set this behaviour due to the fact that the user shall not return to ShoppingCartFragment
-            //and we stop the fucking task
-            (this.requireActivity() as MainActivity).onBackPressedDispatcher.addCallback(this) {
-                updateOrderTask.stopTask();
-                findNavController().navigate(R.id.customerTabFragment);
-            }
+            this.setupBackButton();
 
             return;
         }
@@ -213,6 +207,15 @@ class CustomerFullOrderMapFragment : Fragment(), OnOrderCustomerConfirmationList
         Log.i("ORDER_UPDATE_STATUS", "Updating order status")
         //actualizamos el estado de la orden
         viewModel.getOrderData(Auth.access_token, this.orderId)
+    }
+
+    private fun setupBackButton(){
+        //we set this behaviour due to the fact that the user shall not return to ShoppingCartFragment
+        //and we stop the fucking task
+        (this.requireActivity() as MainActivity).onBackPressedDispatcher.addCallback(this) {
+            updateOrderTask.stopTask();
+            findNavController().navigate(R.id.customerTabFragment);
+        }
     }
 
 }
