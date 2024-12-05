@@ -37,7 +37,7 @@ class UntakenOrderAdapter(var untakerOrders : List<Order>, var onUntakenOrderCli
 
         public fun bind(order: Order, onUntakenOrderClickListener: OnUntakenOrderClickListener){
             binding.driverOrdAddressLabel.text = order.address;
-            binding.driverOrdTotalToPay.text = order.total.toString();
+            binding.driverOrdTotalToPay.text = order.total.toString() + "Bs";
             binding.driverOrdOrderIdLabel.text = order.id.toString();
 
             binding.untakenOrderLayout.setOnClickListener{

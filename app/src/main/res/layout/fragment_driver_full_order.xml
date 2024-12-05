@@ -11,13 +11,13 @@
         android:id="@+id/driverMapFragmentContainer"
         android:name="com.crimsom.mydelapp.ui.driver_mode.fragments.sub_fragments.DriverMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="550dp" />
+        android:layout_height="570dp" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/driverStatusFragmentContainer"
         android:name="com.crimsom.mydelapp.ui.driver_mode.fragments.sub_fragments.DriverStatusFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="160dp"
         tools:layout="@layout/fragment_driver_status" />
 
 </LinearLayout>

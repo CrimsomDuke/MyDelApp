@@ -3,7 +3,6 @@ package com.crimsom.mydelapp.tasks
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.crimsom.mydelapp.aux_interfaces.OnOrderUpdateStatusListener
 

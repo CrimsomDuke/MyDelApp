@@ -125,7 +125,7 @@ class DriverFullOrderFragment : Fragment(), OnDriverTakesOrderListener {
             order.longitude.toDouble()
         )
 
-        mapFragment.setupOriginAndDestinyMarkers(originLocation, restaurant.name, destinationLocation, "Actual");
+        mapFragment.setupOriginAndDestinyMarkers(originLocation, restaurant.name, destinationLocation, order.address);
 
     }
 

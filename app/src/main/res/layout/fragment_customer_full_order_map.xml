@@ -10,12 +10,12 @@
         android:id="@+id/fragmentContainerCustOrderMap"
         android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="550dp" />
+        android:layout_height="570dp" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerCustOrderStatus"
         android:name="com.crimsom.mydelapp.ui.customer_mode.fragments.sub_fragments.CustomerCurrentOrderStatusFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="160dp" />
 
 </LinearLayout>

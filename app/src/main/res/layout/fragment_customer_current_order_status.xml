@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
+    android:layout_margin="2dp"
     android:orientation="vertical"
     android:padding="15dp"
     tools:context=".ui.customer_mode.fragments.sub_fragments.CustomerCurrentOrderStatusFragment">
@@ -18,15 +18,15 @@
             android:id="@+id/cust_ord_confirmLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:text="¿Confirmar Pedido?"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/cust_ord_confirmOrderButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:text="Confirmar" />
     </LinearLayout>
 
@@ -41,15 +41,15 @@
             android:id="@+id/cust_ord_orderStatusLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:text="Estado: "
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/cust_ord_goToOrderDetailsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="5dp"
             android:text="Ver detalles" />
     </LinearLayout>
 
